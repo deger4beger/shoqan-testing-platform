@@ -1,16 +1,14 @@
 import "./index.scss";
 import React from 'react';
+import { Pane, Text } from 'evergreen-ui'
+import Signin from "./pages/Signin";
+import { AuthTemplate } from "./components/templates";
 
 function App() {
   return (
-  	<div className="app">
-	    <div>
-	      If you still don't have an account - Signup
-	    </div>
-	    <div>
-	      Если у вас еще нет аккаунта - Зарегистрироваться
-	    </div>
-    </div>
+  	<>
+  		<AuthTemplate />
+  	</>
   );
 }
 

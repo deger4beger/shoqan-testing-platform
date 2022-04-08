@@ -2,7 +2,7 @@ import React from 'react';
 
 function NotFound() {
   return (
-  	<div className="index">
+  	<div>
 	    Страница не найдена
     </div>
   );

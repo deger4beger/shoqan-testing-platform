@@ -1,13 +1,6 @@
 @import "../lib/styles/fonts.scss";
 @import "../lib/styles/reset.scss";
 
-:root {
-  --lite: #DDDDDD;
-  --dark: #141414;
-  --grey: "#505050";
-  --main: #1676A8;
-}
-
 body {
   font-family: 'Jost', sans-serif;
   background-color: var(--lite);
