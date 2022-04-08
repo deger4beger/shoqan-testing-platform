@@ -28,8 +28,11 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 					display="flex"
 					alignItems="center"
 					flexDirection="column"
-					backgroundColor="gray200"
-					padding={20}
+					border={true}
+					background="gray50"
+					borderWidth={2}
+					borderRadius={4}
+					padding={40}
 				>
 				<Pane borderBottom="1px solid black" marginBottom="30px">
 					<Heading size={800}>
@@ -39,6 +42,7 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 				<Pane>
 					<TextInputField
 					  inputWidth={380}
+					  inputHeight={40}
 					  label="Почтовый адрес"
 					  placeholder="example@example.com"
 						isInvalid={false}
@@ -50,13 +54,13 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 					  placeholder="********"
 					  isInvalid={false}
 					  validationMessage={null}
+					  inputHeight={40}
+					  borderWidth={3}
 					/>
 				</Pane>
 				<Pane marginTop="10px">
-					<Button>
-						<Text size={600}>
-							Зарегистрироваться
-						</Text>
+					<Button size="large">
+						Зарегистрироваться
 					</Button>
 				</Pane>
 			</Pane>
