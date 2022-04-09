@@ -1,6 +1,6 @@
 import React from "react"
 import { TextInputField, SendMessageIcon } from "evergreen-ui"
-import { AuthTemplate } from "../../../components/templates"
+import AuthTemplate from "../../../components/templates/AuthTemplate"
 
 const Signup = () => {
 
