@@ -12,41 +12,39 @@ const AppRouter: React.FC<AppRouterProps> = ({role}) => {
     switch (role) {
       case "unauthorized":
         return (
-          <>
+          <Switch>
             {unauthorizedRoutes.map(route =>
               <Route { ...route } key={route.path} />
             )}
             <Redirect to={RouteNames.SIGNIN}/>
-          </>
+          </Switch>
         )
       case "user":
         return (
-          <>
+          <Switch>
             {userRoutes.map(route =>
               <Route { ...route } key={route.path} />
             )}
             <Redirect to={RouteNames.CABINET}/>
-          </>
+          </Switch>
         )
       case "admin":
         return (
-          <>
+          <Switch>
             {adminRoutes.map(route =>
               <Route { ...route } key={route.path} />
             )}
             <Redirect to={RouteNames.CABINET}/>
-          </>
+          </Switch>
         )
       default:
         return "Some error occured"
     }
   }
 
-  return (
-    <Switch>
-      { getRoutes() }
-    </Switch>
-  )
+  return <>
+    { getRoutes() }
+  </>
 
 }
 
