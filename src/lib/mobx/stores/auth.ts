@@ -1,11 +1,10 @@
-import React from "react"
 import { makeAutoObservable } from "mobx"
 import { RootStore } from ".."
 
 export class AuthStore {
 
-	token: string | null = null
 	rootStore: RootStore
+	token: string | null = null
 
 	constructor (rootStore: RootStore) {
 		this.rootStore = rootStore
@@ -13,7 +12,3 @@ export class AuthStore {
 	}
 
 }
-
-const StoresContext = React.createContext(new RootStore())
-
-export const useStores = () => React.useContext(StoresContext)
