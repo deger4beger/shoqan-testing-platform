@@ -11,6 +11,7 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "5.3.0",
+    "axios": "^0.26.1",
     "classnames": "^2.3.1",
     "evergreen-ui": "^6.9.5",
     "mobx": "^6.5.0",
