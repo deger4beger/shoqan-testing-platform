@@ -8,7 +8,7 @@ interface AuthTemplateProps {
 	linkToSignup?: boolean
 	btnContent: string
 	btnLoading: boolean
-	btnOnClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+	onSubmitForm: () => void
 	btnIcon: any
 }
 
@@ -18,9 +18,16 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 	linkToSignup = false,
 	btnContent,
 	btnLoading,
-	btnOnClick,
+	onSubmitForm,
 	btnIcon
 }) => {
+
+	const onEnterClick = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" && !btnLoading) {
+      onSubmitForm()
+    }
+  }
+
 	return (
 		<Pane
 				width="100vw"
@@ -28,6 +35,7 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
+				onKeyPress={onEnterClick}
 			>
 			<Pane
 					display="flex"
@@ -51,7 +59,7 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 							size="large"
 							iconBefore={btnIcon}
 							isLoading={btnLoading}
-							onClick={btnOnClick}
+							onClick={onSubmitForm}
 						>
 						{btnContent}
 					</Button>

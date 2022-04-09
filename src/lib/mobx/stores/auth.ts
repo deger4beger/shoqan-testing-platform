@@ -7,12 +7,22 @@ import { authApi } from "../../api"
 export class AuthStore {
 
 	rootStore: RootStore
-	token: string | null = null
-	loading = {
-		signup: false
+
+	userData = {
+		token: null,
+		role: null
 	}
-	error = {
-		signup: null
+	temporaryData = {
+		isJustRegistered: false,
+		email: null as null || ""
+	}
+	states = {
+		loading: {
+			signup: false
+		},
+		errors: {
+			signup: false
+		}
 	}
 
 	constructor (rootStore: RootStore) {
@@ -21,14 +31,24 @@ export class AuthStore {
 	}
 
 	signup = flow(function* (this: AuthStore, payload: UserLoginPayload) {
-		this.loading.signup = true
+		this.states.loading.signup = true
 		try {
 			yield authApi.signup(payload)
+			this.states.errors.signup = false
+			this.temporaryData.isJustRegistered = true
+			this.temporaryData.email = payload.email
 		} catch (e: any) {
-			this.error.signup = e
+			this.states.errors.signup = e
 		} finally {
-			this.loading.signup = false
+			this.states.loading.signup = false
 		}
 	})
+
+	setTemporaryData(data: Partial<typeof this.temporaryData>) {
+		this.temporaryData = {
+			...this.temporaryData,
+			...data
+		}
+	}
 
 }
