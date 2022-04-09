@@ -15,6 +15,7 @@ const Signin = () => {
 			btnLoading={false}
 			btnOnClick={onSigninClick}
 			btnIcon={LogInIcon}
+			linkToSignup
 		>
 			<>
 				<TextInputField

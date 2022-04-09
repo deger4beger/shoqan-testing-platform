@@ -1,9 +1,11 @@
 import React from 'react'
 import { Pane, Heading, Button, Text, TextInputField, UserIcon } from 'evergreen-ui'
+import { Link } from "react-router-dom"
 
 interface AuthTemplateProps {
 	children: React.ReactNode
 	title: string
+	linkToSignup?: boolean
 	btnContent: string
 	btnLoading: boolean
 	btnOnClick: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -13,6 +15,7 @@ interface AuthTemplateProps {
 const AuthTemplate: React.FC<AuthTemplateProps> = ({
 	children,
 	title,
+	linkToSignup = false,
 	btnContent,
 	btnLoading,
 	btnOnClick,
@@ -53,6 +56,29 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 						{btnContent}
 					</Button>
 				</Pane>
+				{ linkToSignup && (
+					<Pane
+							display="flex"
+							alignItems="center"
+							flexDirection="column"
+							marginTop="20px"
+							paddingTop="20px"
+							width="100%"
+							borderTop={true}
+						>
+						<Text color="muted">
+							Нет аккаунта ?
+						</Text>
+						<Text color="muted">
+							Пожалуйста, пройдите
+								<Link to="/signup">
+									<Text color="selected">
+										&nbsp;регистрацию
+									</Text>
+								</Link>
+						</Text>
+					</Pane>
+				)}
 			</Pane>
 		</Pane>
 	);
