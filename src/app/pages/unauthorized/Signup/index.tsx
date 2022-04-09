@@ -10,8 +10,8 @@ const Signup = () => {
 
 	return (
 		<AuthTemplate
-			title="Зарегистрироваться"
-			btnContent="Отправить одноразовый пароль"
+			title="Регистрация"
+			btnContent="Зарегистрироваться"
 			btnLoading={false}
 			btnOnClick={onSignupClick}
 			btnIcon={SendMessageIcon}
