@@ -1,14 +1,18 @@
-import "./index.scss";
-import React from 'react';
-import { Pane, Text } from 'evergreen-ui'
-import { AuthTemplate } from "./components/templates";
+import "./index.scss"
+import React from "react"
+import { Pane, Text } from "evergreen-ui"
+import { BrowserRouter } from "react-router-dom"
+
+import { AuthTemplate } from "./components/templates"
+import Signin from "./pages/unauthorized/Signin"
+import AppRouter from "./components/singletone/AppRouter"
 
 function App() {
   return (
-  	<>
-  		<AuthTemplate />
-  	</>
-  );
+  	<BrowserRouter>
+  		<AppRouter role="unauthorized" />
+  	</BrowserRouter>
+  )
 }
 
-export default App;
+export default App
