@@ -1,27 +1,32 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
 
-import { UserLoginPayload } from "../../../types"
+import { UserData, UserSigninPayload, UserSigninResponse, UserSignupPayload } from "../../../types"
 import { authApi } from "../../api"
+import { validateToken } from "../../jwt"
 
 export class AuthStore {
 
 	rootStore: RootStore
 
+	isLoggedIn = false
 	userData = {
-		token: null,
-		role: null
+		id: null as null | string,
+		email: null as null | string,
+		isAdmin: null as null | boolean
 	}
 	temporaryData = {
 		isJustRegistered: false,
-		email: null as null || ""
+		email: ""
 	}
 	states = {
 		loading: {
-			signup: false
+			signup: false,
+			signin: false
 		},
 		errors: {
-			signup: false
+			signup: false,
+			signin: false
 		}
 	}
 
@@ -30,19 +35,58 @@ export class AuthStore {
 		makeAutoObservable(this)
 	}
 
-	signup = flow(function* (this: AuthStore, payload: UserLoginPayload) {
+	signup = flow(function* (
+		this: AuthStore,
+		payload: UserSignupPayload
+	) {
 		this.states.loading.signup = true
 		try {
 			yield authApi.signup(payload)
 			this.states.errors.signup = false
-			this.temporaryData.isJustRegistered = true
-			this.temporaryData.email = payload.email
+			this.setTemporaryData({
+				isJustRegistered: true,
+				email: payload.email
+			})
 		} catch (e: any) {
 			this.states.errors.signup = e
 		} finally {
 			this.states.loading.signup = false
 		}
 	})
+
+	signin = flow(function* (
+		this: AuthStore,
+		payload: UserSigninPayload
+	) {
+		this.states.loading.signin = true
+		try {
+			const response = yield authApi.signin(payload)
+			this.states.errors.signin = false
+			const { token, ...userData } = response
+			this.setMyData(userData, token)
+		} catch (e: any) {
+			this.states.errors.signin = e
+		} finally {
+			this.states.loading.signin = false
+		}
+	})
+
+	initializeUser() {
+		const userData = validateToken()
+		if (userData) {
+			this.setMyData(userData)
+		}
+	}
+
+	setMyData(data: UserData, userToken: string | null = null) {
+		console.log(data, userToken)
+		this.userData = {
+			...this.userData,
+			...data
+		}
+		this.isLoggedIn = true
+		userToken && localStorage.setItem("key", userToken)
+	}
 
 	setTemporaryData(data: Partial<typeof this.temporaryData>) {
 		this.temporaryData = {

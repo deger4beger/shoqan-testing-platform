@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { TextInputField, LogInIcon, CornerDialog, Heading } from "evergreen-ui"
+import { observer } from "mobx-react"
 
 import AuthTemplate from "../../../components/templates/AuthTemplate"
 import { useStores } from "../../../../lib/mobx"
@@ -20,7 +21,8 @@ const Signin = () => {
 	}, [])
 
 	const onSubmitForm = () => {
-		console.log(formData)
+		if (!formData.email || !formData.password) return
+		authStore.signin(formData)
 	}
 
 	const onInputChange = (
@@ -38,7 +40,7 @@ const Signin = () => {
 			<AuthTemplate
 				title="Войти в систему"
 				btnContent="Войти"
-				btnLoading={false}
+				btnLoading={authStore.states.loading.signin}
 				onSubmitForm={onSubmitForm}
 				btnIcon={LogInIcon}
 				linkToSignup
@@ -84,4 +86,4 @@ const Signin = () => {
 	)
 }
 
-export default Signin
+export default observer(Signin)

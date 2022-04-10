@@ -3,14 +3,14 @@ import { Redirect, Route, Switch } from "react-router-dom"
 import { RouteNames, adminRoutes, unauthorizedRoutes, userRoutes } from "../../../router"
 
 interface AppRouterProps {
-  role: "unauthorized" | "user" | "admin"
+  isAdmin: null | boolean
 }
 
-const AppRouter: React.FC<AppRouterProps> = ({role}) => {
+const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
 
   const getRoutes = () => {
-    switch (role) {
-      case "unauthorized":
+    switch (isAdmin) {
+      case null:
         return (
           <Switch>
             {unauthorizedRoutes.map(route =>
@@ -19,7 +19,7 @@ const AppRouter: React.FC<AppRouterProps> = ({role}) => {
             <Redirect to={RouteNames.SIGNIN}/>
           </Switch>
         )
-      case "user":
+      case false:
         return (
           <Switch>
             {userRoutes.map(route =>
@@ -28,7 +28,7 @@ const AppRouter: React.FC<AppRouterProps> = ({role}) => {
             <Redirect to={RouteNames.CABINET}/>
           </Switch>
         )
-      case "admin":
+      case true:
         return (
           <Switch>
             {adminRoutes.map(route =>
