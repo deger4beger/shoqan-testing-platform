@@ -1,7 +1,12 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
 
-import { UserData, UserSigninPayload, UserSigninResponse, UserSignupPayload } from "../../../types"
+import {
+	UserData,
+	UserSigninPayload,
+	UserSigninResponse,
+	UserSignupPayload
+} from "../../../types"
 import { authApi } from "../../api"
 import { validateToken } from "../../jwt"
 
@@ -79,7 +84,6 @@ export class AuthStore {
 	}
 
 	setMyData(data: UserData, userToken: string | null = null) {
-		console.log(data, userToken)
 		this.userData = {
 			...this.userData,
 			...data

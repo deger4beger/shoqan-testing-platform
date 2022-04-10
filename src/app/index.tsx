@@ -7,6 +7,7 @@ import { observer } from "mobx-react"
 import { useStores } from "../lib/mobx"
 import Signin from "./pages/unauthorized/Signin"
 import AppRouter from "./components/singletone/AppRouter"
+import Header from "./components/singletone/Header"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
 
   return (
   	<BrowserRouter>
+  		<Header isAdmin={null} />
   		<AppRouter isAdmin={authStore.userData.isAdmin} />
   	</BrowserRouter>
   )

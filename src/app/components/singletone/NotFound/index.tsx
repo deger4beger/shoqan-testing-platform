@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react"
 import { Pane, Heading } from "evergreen-ui"
 
-function NotFound() {
+const NotFound = () => {
   return (
   	<Pane
   		width="100vw"
@@ -17,4 +17,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFound
