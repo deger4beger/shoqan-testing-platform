@@ -19,7 +19,12 @@ function App() {
 
   return (
   	<BrowserRouter>
-  		<Header isAdmin={null} />
+  		{authStore.isLoggedIn &&
+  			<Header
+  				userIdentifier={authStore.userData.email as string}
+  				isAdmin={authStore.userData.isAdmin as boolean}
+  			/>
+  		}
   		<AppRouter isAdmin={authStore.userData.isAdmin} />
   	</BrowserRouter>
   )

@@ -83,6 +83,20 @@ export class AuthStore {
 		}
 	}
 
+	logout() {
+		this.userData = {
+			id: null,
+			email: null,
+			isAdmin: null
+		}
+		this.isLoggedIn = false
+		this.temporaryData = {
+			isJustRegistered: false,
+			email: ""
+		}
+		localStorage.removeItem("key")
+	}
+
 	setMyData(data: UserData, userToken: string | null = null) {
 		this.userData = {
 			...this.userData,
