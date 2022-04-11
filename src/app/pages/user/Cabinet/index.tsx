@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState} from 'react'
 import {Button, Pane, SelectMenu, TextInputField} from "evergreen-ui";
 
 const UserCabinet = () => {
@@ -20,21 +20,21 @@ const UserCabinet = () => {
       >
         <TextInputField
           label="ФИО"
-          placeholder="Введите ФИО"
+          placeholder="Шокоров Владислав Юрьевич"
           width={300}
           onChange={onFullNameChange} value={fullName}
         />
+
         <SelectMenu
           title="Выберите ВУЗ"
           hasTitle={false}
           options={[
-            "Apple", "Apricot",
-            "Banana", "Cherry",
-            "Cucumber"]
+            'Apple', 'Apricot',
+            'Banana', 'Cherry',
+            'Cucumber']
             .map(
               (label) => ({label, value: label})
             )}
-          itemHeight={40}
         >
           <Button width={300}>
             {"Выберите ВУЗ . . ."}
@@ -44,11 +44,10 @@ const UserCabinet = () => {
         <SelectMenu
           title="Выберите специальность"
           hasTitle={false}
-          itemHeight={40}
           options={[
-            "Apple", "Apricot",
-            "Banana", "Cherry",
-            "Cucumber"]
+            'Apple', 'Apricot',
+            'Banana', 'Cherry',
+            'Cucumber']
             .map(
               (label) => ({label, value: label})
             )}
@@ -62,8 +61,7 @@ const UserCabinet = () => {
           title="Выберите курс"
           hasFilter={false}
           hasTitle={false}
-          itemHeight={40}
-          options={["1","2","3","4"]
+          options={['1','2','3','4']
             .map(
               (label) => ({label, value: label})
             )}
