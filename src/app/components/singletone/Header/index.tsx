@@ -1,5 +1,5 @@
 import React from "react"
-import { Pane, Text, Tablist, Tab, Strong, LogInIcon, LogOutIcon } from "evergreen-ui"
+import { Pane, Text, Tablist, Tab, Strong, KeyIcon, LogOutIcon } from "evergreen-ui"
 import { Link, useLocation } from "react-router-dom"
 import { useStores } from "../../../../lib/mobx"
 
@@ -78,11 +78,17 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
                 aria-controls={`panel-${userIdentifier}`}
                 fontSize={14}
               >
-                <LogInIcon marginRight={10} />
-                { userIdentifier }
+                <KeyIcon marginRight={10} />
+                Личный кабинет
               </Tab>
             </Link>
-            <Tab appearance="primary" marginLeft= {20} fontSize={14} onClick={() => authStore.logout()}>
+            <Tab
+                appearance="primary"
+                marginLeft= {20}
+                fontSize={14}
+                onClick={() =>
+                  authStore.logout()
+                }>
               <LogOutIcon />&nbsp;Выйти
             </Tab>
           </Pane>
