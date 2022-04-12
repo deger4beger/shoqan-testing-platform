@@ -1,8 +1,13 @@
 import React from "react"
+
 import Signin from "../pages/unauthorized/Signin"
 import Signup from "../pages/unauthorized/Signup"
 import AdminCabinet from "../pages/admin/Cabinet"
 import UserCabinet from "../pages/user/Cabinet"
+import AllCertificates from "../pages/admin/AllCertificates"
+import UploadTests from "../pages/admin/UploadTests"
+import MyStudy from "../pages/user/MyStudy"
+import MyCertificates from "../pages/user/MyCertificates"
 
 export interface IRoute {
     path: string;
@@ -13,7 +18,10 @@ export interface IRoute {
 export enum RouteNames {
     SIGNIN = "/signin",
     SIGNUP = "/signup",
-    CABINET = "/cabinet"
+    CABINET = "/cabinet",
+    UPLOAD = "/upload",
+    CERTIFICATES = "/certificates",
+    MYSTUDY = "/study"
 }
 
 export const unauthorizedRoutes: IRoute[] = [
@@ -22,9 +30,13 @@ export const unauthorizedRoutes: IRoute[] = [
 ]
 
 export const adminRoutes: IRoute[] = [
-    {path: RouteNames.CABINET, exact: true, component: AdminCabinet}
+    {path: RouteNames.CABINET, exact: true, component: AdminCabinet},
+    {path: RouteNames.UPLOAD, exact: true, component: UploadTests},
+    {path: RouteNames.CERTIFICATES, exact: true, component: AllCertificates}
 ]
 
 export const userRoutes: IRoute[] = [
-    {path: RouteNames.CABINET, exact: true, component: UserCabinet}
+    {path: RouteNames.CABINET, exact: true, component: UserCabinet},
+    {path: RouteNames.MYSTUDY, exact: true, component: MyStudy},
+    {path: RouteNames.CERTIFICATES, exact: true, component: MyCertificates}
 ]

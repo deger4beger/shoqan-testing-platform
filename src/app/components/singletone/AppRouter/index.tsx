@@ -1,12 +1,15 @@
 import React from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
 import { RouteNames, adminRoutes, unauthorizedRoutes, userRoutes } from "../../../router"
+import { Pane } from "evergreen-ui"
 
 interface AppRouterProps {
   isAdmin: null | boolean
 }
 
 const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
+
+  const isAuthorized = (isAdmin !== null)
 
   const getRoutes = () => {
     switch (isAdmin) {
@@ -42,9 +45,9 @@ const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
     }
   }
 
-  return <>
+  return <Pane paddingTop={isAuthorized ? 100 : 0}>
     { getRoutes() }
-  </>
+  </Pane>
 
 }
 

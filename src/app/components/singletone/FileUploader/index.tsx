@@ -1,0 +1,47 @@
+import React from "react"
+import { FileCard, FileUploader, Pane } from "evergreen-ui"
+
+function DocxUploader() {
+  const [files, setFiles] = React.useState<File[]>([])
+  const [fileRejections, setFileRejections] = React.useState<File[]>([])
+  const handleChange = (files) => {
+    setFiles([files[0]])
+    console.log(files)
+  }
+  const handleRejected = (fileRejections) => setFileRejections([fileRejections[0]])
+  const handleRemove = () => {
+    setFiles([])
+    setFileRejections([])
+  }
+  return (
+    <Pane minWidth={750}>
+      <FileUploader
+        label="Загрузить тест"
+        description="Вы можете загрузить 1 файл с тестом, файл может быть весом до 50 мб."
+        maxSizeInBytes={50 * 1024 ** 2}
+        maxFiles={1}
+        onChange={handleChange}
+        onRejected={handleRejected}
+        renderFile={(file) => {
+          const { name, size, type } = file
+          const fileRejection = fileRejections.find((fileRejection) => (fileRejection as any).file === file)
+          const { message } = fileRejection || {} as any
+          return (
+            <FileCard
+              key={name}
+              isInvalid={fileRejection != null}
+              name={name}
+              onRemove={handleRemove}
+              sizeInBytes={size}
+              type={type}
+              validationMessage={message}
+            />
+          )
+        }}
+        values={files}
+      />
+    </Pane>
+  )
+}
+
+export default DocxUploader

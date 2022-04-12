@@ -1,12 +1,12 @@
 import React from 'react'
 import { Pane } from "evergreen-ui"
 
-const AdminCabinet = () => {
+const MyStudy = () => {
 	return (
 		<Pane width="100%" display="flex" justifyContent="center">
-			Кабинет админа
+			Прохождение тестов
 		</Pane>
 	)
 }
 
-export default AdminCabinet
+export default MyStudy

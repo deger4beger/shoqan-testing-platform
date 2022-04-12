@@ -11,12 +11,16 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
 
-  const getCurrentUrlData = () => {
-    const adminRouteNames = ["Сертификаты", "Дисциплины", "Тестирования"]
-    const adminRotes = ["/sertificates", "/disciplines", "/testing"]
+  const {
+    currentRoutes,
+    currentRouteNames,
+    cabinetUrlIndex
+  } = (function() {
+    const adminRouteNames = ["Загрузить тест", "Список сертификатов"]
+    const adminRotes = ["/upload", "/certificates"]
 
-    const userRouteNames = ["Моя учеба", "Мои сертификаты", "Мои достижения"]
-    const userRotes = ["/school", "/sertificates", "/dostizheniya"]
+    const userRouteNames = ["Моя учеба", "Мои сертификаты"]
+    const userRotes = ["/study", "/certificates"]
 
     const currentRouteNames = isAdmin ? adminRouteNames : userRouteNames
     const currentRoutes = isAdmin ? adminRotes : userRotes
@@ -26,13 +30,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
       currentRouteNames,
       cabinetUrlIndex
     }
-  }
-
-  const {
-    currentRoutes,
-    currentRouteNames,
-    cabinetUrlIndex
-  } = getCurrentUrlData()
+  }())
 
   const { authStore } = useStores()
   const currentLocation = useLocation().pathname
