@@ -11,22 +11,24 @@ const UserCabinet = () => {
   return (
     <>
       <Pane
-        width="60%"
+        width="100%"
         paddingTop={100}
-        margin="auto"
         display="flex"
         flexDirection="column"
+        alignItems="center"
       >
       	<Pane width={480}>
-	      	<Heading size={700}>
-	      		<WarningSignIcon color="warning" marginRight={16} />
-	      		Заполните анкету, чтобы продолжить дальше:
-	      	</Heading>
+      		<Pane>
+		      	<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
+		      		<WarningSignIcon color="warning" marginRight={16} />
+		      		Заполните анкету, чтобы продолжить дальше:
+		      	</Heading>
+	      	</Pane>
 	        <TextInputField
 	          label="ФИО"
 	          placeholder="Введите ФИО"
 	          width="100%"
-	          marginTop={20}
+	          marginTop={30}
 	          onChange={onFullNameChange} value={fullName}
 	        />
 

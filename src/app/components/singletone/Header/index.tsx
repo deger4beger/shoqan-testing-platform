@@ -1,6 +1,7 @@
 import React from "react"
 import { Pane, Text, Tablist, Tab, Strong, KeyIcon, LogOutIcon } from "evergreen-ui"
 import { Link, useLocation } from "react-router-dom"
+
 import { useStores } from "../../../../lib/mobx"
 
 interface HeaderProps {
@@ -10,24 +11,37 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
 
+  const getCurrentUrlData = () => {
+    const adminRouteNames = ["Сертификаты", "Дисциплины", "Тестирования"]
+    const adminRotes = ["/sertificates", "/disciplines", "/testing"]
+
+    const userRouteNames = ["Моя учеба", "Мои сертификаты", "Мои достижения"]
+    const userRotes = ["/school", "/sertificates", "/dostizheniya"]
+
+    const currentRouteNames = isAdmin ? adminRouteNames : userRouteNames
+    const currentRoutes = isAdmin ? adminRotes : userRotes
+    const cabinetUrlIndex = currentRoutes.length
+    return {
+      currentRoutes,
+      currentRouteNames,
+      cabinetUrlIndex
+    }
+  }
+
+  const {
+    currentRoutes,
+    currentRouteNames,
+    cabinetUrlIndex
+  } = getCurrentUrlData()
+
   const { authStore } = useStores()
-
-  const adminRouteNames = ["Сертификаты", "Дисциплины", "Тестирования"]
-  const adminRotes = ["/sertificates", "/disciplines", "/testing"]
-
-  const userRouteNames = ["Моя учеба", "Мои сертификаты", "Мои достижения"]
-  const userRotes = ["/school", "/sertificates", "/dostizheniya"]
-
-  const url = useLocation().pathname
-  const currentRouteNames = isAdmin ? adminRouteNames : userRouteNames
-  const currentRoutes = isAdmin ? adminRotes : userRotes
-  const cabinetUrlIndex = currentRoutes.length
+  const currentLocation = useLocation().pathname
 
   const [tabs] = React.useState(currentRouteNames)
   const [selectedIndex, setSelectedIndex] = React.useState<
     null | number
   >(
-    currentRoutes.includes(url) ? currentRoutes.indexOf(url) : cabinetUrlIndex
+    currentRoutes.includes(currentLocation) ? currentRoutes.indexOf(currentLocation) : cabinetUrlIndex
   )
 
   return (
