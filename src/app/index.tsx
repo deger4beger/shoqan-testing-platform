@@ -17,6 +17,12 @@ function App() {
 		authStore.initializeUser()
 	}, [])
 
+  if (!authStore.isInitialized) {
+    return <Pane>
+      Инициализация приложения...
+    </Pane>
+  }
+
   return (
   	<BrowserRouter>
   		{authStore.isLoggedIn &&

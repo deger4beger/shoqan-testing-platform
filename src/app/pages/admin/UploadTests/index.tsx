@@ -1,10 +1,17 @@
-import React from 'react'
-import { FileUploader, Pane } from "evergreen-ui"
+import React from "react"
+import { Pane } from "evergreen-ui"
+
+import DocxUploader from "../../../components/singletone/FileUploader"
 
 const UploadTests = () => {
+
 	return (
 		<Pane width="100%" display="flex" justifyContent="center">
-			<FileUploader />
+			<DocxUploader>
+				{({file, rejectHandler}) => {
+					console.log(file, rejectHandler)
+				}}
+			</DocxUploader>
 		</Pane>
 	)
 }

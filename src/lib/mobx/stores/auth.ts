@@ -15,6 +15,7 @@ export class AuthStore {
 	rootStore: RootStore
 
 	isLoggedIn = false
+	isInitialized = false
 	userData = {
 		id: null as null | string,
 		email: null as null | string,
@@ -80,7 +81,10 @@ export class AuthStore {
 		const userData = validateToken()
 		if (userData) {
 			this.setMyData(userData)
+		} else {
+			this.logout()
 		}
+		this.isInitialized = true
 	}
 
 	logout() {
