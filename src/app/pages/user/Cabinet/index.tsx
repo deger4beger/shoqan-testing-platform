@@ -32,12 +32,11 @@ const UserCabinet = () => {
 	        />
 
 	        <SelectMenu
-	          title="Выберите ВУЗ"
 	          hasTitle={false}
 	          options={[
-	            'Apple', 'Apricot',
-	            'Banana', 'Cherry',
-	            'Cucumber']
+	            "Apple", "Apricot",
+	            "Banana", "Cherry",
+	            "Cucumber"]
 	            .map(
 	              (label) => ({label, value: label})
 	            )}
@@ -48,12 +47,11 @@ const UserCabinet = () => {
 	        </SelectMenu>
 	        <br/>
 	        <SelectMenu
-	          title="Выберите специальность"
 	          hasTitle={false}
 	          options={[
-	            'Apple', 'Apricot',
-	            'Banana', 'Cherry',
-	            'Cucumber']
+	            "Apple", "Apricot",
+	            "Banana", "Cherry",
+	            "Cucumber"]
 	            .map(
 	              (label) => ({label, value: label})
 	            )}
@@ -64,10 +62,9 @@ const UserCabinet = () => {
 	        </SelectMenu>
 	        <br/>
 	        <SelectMenu
-	          title="Выберите курс"
 	          hasFilter={false}
 	          hasTitle={false}
-	          options={['1','2','3','4']
+	          options={["1","2","3","4"]
 	            .map(
 	              (label) => ({label, value: label})
 	            )}

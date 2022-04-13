@@ -22,8 +22,7 @@ const DocxUploader: React.FC<DocxUploaderProps> = ({children}) => {
     setFileRejections([])
   }
   return (
-    <Pane minWidth={750}>
-      {children({file: files[0], rejectHandler: handleRemove})}
+    <Pane width="100%">
       <FileUploader
         label="Загрузить тест"
         description="Вы можете загрузить 1 файл с тестом, файл может быть весом до 50 мб."
@@ -49,6 +48,7 @@ const DocxUploader: React.FC<DocxUploaderProps> = ({children}) => {
         }}
         values={files}
       />
+      {children({file: files[0], rejectHandler: handleRemove})}
     </Pane>
   )
 }
