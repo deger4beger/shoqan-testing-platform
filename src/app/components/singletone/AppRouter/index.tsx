@@ -37,7 +37,7 @@ const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
             {adminRoutes.map(route =>
               <Route { ...route } key={route.path} />
             )}
-            <Redirect to={RouteNames.CABINET}/>
+            <Redirect to={RouteNames.CERTIFICATES} />
           </Switch>
         )
       default:

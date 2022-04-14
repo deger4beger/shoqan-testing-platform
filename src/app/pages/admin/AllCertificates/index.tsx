@@ -79,7 +79,7 @@ const AllCertificates = () => {
 			>
 			<Pane marginBottom={30}>
 				<Heading size={700} borderBottom="1px solid black">
-					Список сертификатов всех студентов
+					Список последних сертификатов студентов
 				</Heading>
 			</Pane>
 			<Table width="100%">

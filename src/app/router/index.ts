@@ -2,7 +2,6 @@ import React from "react"
 
 import Signin from "../pages/unauthorized/Signin"
 import Signup from "../pages/unauthorized/Signup"
-import AdminCabinet from "../pages/admin/Cabinet"
 import UserCabinet from "../pages/user/Cabinet"
 import AllCertificates from "../pages/admin/AllCertificates"
 import UploadTests from "../pages/admin/UploadTests"
@@ -30,7 +29,6 @@ export const unauthorizedRoutes: IRoute[] = [
 ]
 
 export const adminRoutes: IRoute[] = [
-    {path: RouteNames.CABINET, exact: true, component: AdminCabinet},
     {path: RouteNames.UPLOAD, exact: true, component: UploadTests},
     {path: RouteNames.CERTIFICATES, exact: true, component: AllCertificates}
 ]

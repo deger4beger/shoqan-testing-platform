@@ -14,21 +14,21 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
   const {
     currentRoutes,
     currentRouteNames,
-    cabinetUrlIndex
+    defaultUrlIndex
   } = (function() {
     const adminRouteNames = ["Загрузить тест", "Список сертификатов"]
-    const adminRotes = ["/upload", "/certificates"]
+    const adminRoutes = ["/upload", "/certificates"]
 
     const userRouteNames = ["Моя учеба", "Мои сертификаты"]
-    const userRotes = ["/study", "/certificates"]
+    const userRoutes = ["/study", "/certificates"]
 
     const currentRouteNames = isAdmin ? adminRouteNames : userRouteNames
-    const currentRoutes = isAdmin ? adminRotes : userRotes
-    const cabinetUrlIndex = currentRoutes.length
+    const currentRoutes = isAdmin ? adminRoutes : userRoutes
+    const defaultUrlIndex = isAdmin ? adminRoutes.indexOf("/certificates") : currentRoutes.length
     return {
       currentRoutes,
       currentRouteNames,
-      cabinetUrlIndex
+      defaultUrlIndex
     }
   }())
 
@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
   const [selectedIndex, setSelectedIndex] = React.useState<
     null | number
   >(
-    currentRoutes.includes(currentLocation) ? currentRoutes.indexOf(currentLocation) : cabinetUrlIndex
+    currentRoutes.includes(currentLocation) ? currentRoutes.indexOf(currentLocation) : defaultUrlIndex
   )
 
   return (
@@ -80,20 +80,20 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
           ))}
           </Pane>
           <Pane>
-            <Link to="/cabinet">
+            { !isAdmin && <Link to="/cabinet">
               <Tab
                 key={userIdentifier}
                 id={userIdentifier}
                 appearance="primary"
-                onSelect={() => setSelectedIndex(cabinetUrlIndex)}
-                isSelected={selectedIndex === cabinetUrlIndex}
+                onSelect={() => setSelectedIndex(defaultUrlIndex)}
+                isSelected={selectedIndex === defaultUrlIndex}
                 aria-controls={`panel-${userIdentifier}`}
                 fontSize={14}
               >
                 <KeyIcon marginRight={10} />
                 Личный кабинет
               </Tab>
-            </Link>
+            </Link> }
             <Tab
                 appearance="primary"
                 marginLeft= {20}
