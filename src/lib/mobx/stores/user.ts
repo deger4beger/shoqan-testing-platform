@@ -1,6 +1,6 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
-import { UserProfile } from "../../../types"
+import { UserProfile, UserProfilePayload } from "../../../types"
 import { userApi } from "../../api/protected"
 
 export class UserStore {
@@ -24,23 +24,24 @@ export class UserStore {
 
 	sendProfile = flow(function* (
 		this: UserStore,
-		payload: UserProfile
+		payload: UserProfilePayload
 	) {
 		this.states.loading.profile = true
 		try {
-			const data = new FormData()
 			const { photo, ...otherData } = payload
-			console.log(photo, otherData)
+
+			const data = new FormData()
 			const json = JSON.stringify(otherData)
 			const blob = new Blob([json], {
 			  type: "application/json"
 			})
 			data.append("photo", photo)
 			data.append("userProfile", blob)
-			console.log(data)
-			yield userApi.sendProfile(data)
+
+			const response = yield userApi.sendProfile(data)
+
 			this.states.errors.profile = false
-			this.setUserProfile(payload)
+			this.setUserProfile(response)
 		} catch (e: any) {
 			this.states.errors.profile = e
 		} finally {

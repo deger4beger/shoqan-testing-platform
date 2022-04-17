@@ -1,6 +1,18 @@
 import React, {useState} from "react"
-import {Button, Combobox, FilePicker, Pane, SelectMenu, SendMessageIcon, TextInputField, Heading, WarningSignIcon } from "evergreen-ui"
+import {
+	Avatar,
+	Button,
+	Combobox,
+	FilePicker,
+	Pane,
+	SelectMenu,
+	SendMessageIcon, Text, TextInputField,
+	Heading,
+	WarningSignIcon
+} from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
+import { observer } from "mobx-react"
+import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
 
 const UserCabinet = () => {
 
@@ -12,6 +24,8 @@ const UserCabinet = () => {
   	course: ""
   })
   const [photo, setPhoto] = useState<null | FileList>(null)
+
+  const isFormDisabled = !!userStore.profile
 
   const onFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -43,56 +57,68 @@ const UserCabinet = () => {
         alignItems="center"
       >
       	<Pane width={480}>
-      		<Pane>
-		      	<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
-		      		<WarningSignIcon color="warning" marginRight={16} />
-		      		Заполните анкету, чтобы продолжить дальше:
-		      	</Heading>
-	      	</Pane>
-	      	<TextInputField
-	          label="ФИО"
-	          placeholder="Введите ФИО"
-	          width="100%"
-	          marginTop={30}
-	          onChange={onFullNameChange}
-	          value={formData.fullname}
-	        />
-	      	<Combobox
-					  openOnFocus
-					  items={["Корпоративные информационные системы"]}
-					  onChange={selected => setSelectedField(selected, "specialty")}
-					  placeholder="Специальность"
-					  width="100%"
-					  marginBottom={20}
-					/>
-					<Combobox
-					  openOnFocus
-					  items={['1', '2', '3', '4']}
-					  onChange={selected => setSelectedField(selected, "course")}
-					  placeholder="Курс"
-					  width="100%"
-					  marginBottom={20}
-					/>
-					<FilePicker
-							width="100%"
-							onChange={(photo) => setPhoto(photo)}
-							placeholder="Фото"
-							marginBottom={10}
-						/>
-	        <Button
-	        		width="100%"
-	        		marginTop={30}
-	        		appearance="primary"
-	        		intent="success"
-	        		onClick={onFormConfirm}
-	        	>
-	        	<SendMessageIcon marginRight={16} />
-	        	Отправить данные
-	        </Button>
-        </Pane>
+    			{ !isFormDisabled ? (
+    				<>
+	    				<Pane>
+			      		<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
+			      			<WarningSignIcon color="warning" marginRight={16} />
+			      			Заполните анкету, чтобы продолжить дальше:
+			      		</Heading>
+		      		</Pane>
+			      	<TextInputField
+			          label="ФИО"
+			          placeholder="Введите ФИО"
+			          width="100%"
+			          marginTop={30}
+			          onChange={onFullNameChange}
+			          value={formData.fullname}
+			          disabled={isFormDisabled}
+			        />
+			      	<Combobox
+							  openOnFocus
+							  items={["Корпоративные информационные системы"]}
+							  onChange={selected => setSelectedField(selected, "specialty")}
+							  selectedItem={formData.specialty}
+							  placeholder="Специальность"
+							  width="100%"
+							  marginBottom={20}
+							  disabled={isFormDisabled}
+							/>
+							<Combobox
+							  openOnFocus
+							  items={['1', '2', '3', '4']}
+							  onChange={selected => setSelectedField(selected, "course")}
+							  selectedItem={formData.course}
+							  placeholder="Курс"
+							  width="100%"
+							  marginBottom={20}
+							  disabled={isFormDisabled}
+							/>
+							<FilePicker
+									width="100%"
+									onChange={(photo) => setPhoto(photo)}
+									placeholder="Фото"
+									marginBottom={10}
+									disabled={isFormDisabled}
+								/>
+			        <Button
+			        		width="100%"
+			        		marginTop={30}
+			        		appearance="primary"
+			        		intent="success"
+			        		onClick={onFormConfirm}
+			        		isLoading={userStore.states.loading.profile}
+			        	>
+			        	<SendMessageIcon marginRight={16} />
+			        	Отправить данные
+			        </Button>
+		      </> ) : (
+		      	<UserProfileFilled profile={userStore.profile as any} />
+		      )}
+		    </Pane>
       </Pane>
     </>
   )
 }
 
-export default UserCabinet
+export default observer(UserCabinet)

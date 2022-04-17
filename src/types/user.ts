@@ -17,9 +17,13 @@ export interface UserSigninResponse extends UserData {
 	profile: UserProfile
 }
 
-export interface UserProfile {
+export interface UserProfilePayload {
 	fullname: string
 	specialty: string
 	course: string
 	photo: File
+}
+
+export interface UserProfile extends Omit<UserProfilePayload, "photo"> {
+	photo: string
 }

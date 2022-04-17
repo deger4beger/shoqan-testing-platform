@@ -68,7 +68,9 @@ export class AuthStore {
 			const response = yield authApi.signin(payload)
 			this.states.errors.signin = false
 			const { token, profile, ...userData } = response
-			this.rootStore.userStore.setUserProfile(profile)
+			if (profile) {
+				this.rootStore.userStore.setUserProfile(profile)
+			}
 			this.setMyData(userData, token)
 		} catch (e: any) {
 			this.states.errors.signin = e
