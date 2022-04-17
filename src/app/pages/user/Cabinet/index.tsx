@@ -1,12 +1,38 @@
 import React, {useState} from "react"
-import {Button, Pane, SelectMenu, SendMessageIcon, TextInputField, Heading, WarningSignIcon } from "evergreen-ui"
+import {Button, Combobox, FilePicker, Pane, SelectMenu, SendMessageIcon, TextInputField, Heading, WarningSignIcon } from "evergreen-ui"
+import { useStores } from "../../../../lib/mobx"
 
 const UserCabinet = () => {
 
-  const [fullName, setFullName] = useState("")
+	const { userStore } = useStores()
+
+  const [formData, setFormData] = useState({
+  	fullname: "",
+  	specialty: "",
+  	course: ""
+  })
+  const [photo, setPhoto] = useState<null | FileList>(null)
+
   const onFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFullName(e.currentTarget.value)
+    setFormData(prev => ({
+    	...prev,
+    	fullname: e.target.value
+    }))
   }
+
+  const setSelectedField = (item: any, fieldName: keyof typeof formData) => {
+		setFormData(prev => ({
+			...prev,
+			[fieldName]: item
+		}))
+	}
+
+	const onFormConfirm = () => {
+		userStore.sendProfile({
+			...formData,
+			photo: (photo as FileList)[0]
+		})
+	}
 
   return (
     <>
@@ -23,57 +49,43 @@ const UserCabinet = () => {
 		      		Заполните анкету, чтобы продолжить дальше:
 		      	</Heading>
 	      	</Pane>
-	        <TextInputField
+	      	<TextInputField
 	          label="ФИО"
 	          placeholder="Введите ФИО"
 	          width="100%"
 	          marginTop={30}
-	          onChange={onFullNameChange} value={fullName}
+	          onChange={onFullNameChange}
+	          value={formData.fullname}
 	        />
-
-	        <SelectMenu
-	          hasTitle={false}
-	          options={[
-	            "Apple", "Apricot",
-	            "Banana", "Cherry",
-	            "Cucumber"]
-	            .map(
-	              (label) => ({label, value: label})
-	            )}
-	        >
-	          <Button width="100%">
-	            Выберите ВУЗ . . .
-	          </Button>
-	        </SelectMenu>
-	        <br/>
-	        <SelectMenu
-	          hasTitle={false}
-	          options={[
-	            "Apple", "Apricot",
-	            "Banana", "Cherry",
-	            "Cucumber"]
-	            .map(
-	              (label) => ({label, value: label})
-	            )}
-	        >
-	          <Button width="100%" marginTop={20}>
-	            Выберите специальность . . .
-	          </Button>
-	        </SelectMenu>
-	        <br/>
-	        <SelectMenu
-	          hasFilter={false}
-	          hasTitle={false}
-	          options={["1","2","3","4"]
-	            .map(
-	              (label) => ({label, value: label})
-	            )}
-	        >
-	          <Button width="100%" marginTop={20}>
-	            Выберите курс . . .
-	          </Button>
-	        </SelectMenu>
-	        <Button width="100%" marginTop={30} appearance="primary" intent="success">
+	      	<Combobox
+					  openOnFocus
+					  items={["Корпоративные информационные системы"]}
+					  onChange={selected => setSelectedField(selected, "specialty")}
+					  placeholder="Специальность"
+					  width="100%"
+					  marginBottom={20}
+					/>
+					<Combobox
+					  openOnFocus
+					  items={['1', '2', '3', '4']}
+					  onChange={selected => setSelectedField(selected, "course")}
+					  placeholder="Курс"
+					  width="100%"
+					  marginBottom={20}
+					/>
+					<FilePicker
+							width="100%"
+							onChange={(photo) => setPhoto(photo)}
+							placeholder="Фото"
+							marginBottom={10}
+						/>
+	        <Button
+	        		width="100%"
+	        		marginTop={30}
+	        		appearance="primary"
+	        		intent="success"
+	        		onClick={onFormConfirm}
+	        	>
 	        	<SendMessageIcon marginRight={16} />
 	        	Отправить данные
 	        </Button>

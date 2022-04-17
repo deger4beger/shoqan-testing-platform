@@ -2,8 +2,7 @@ import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
 
 import {
-	UserData,
-	UserSigninPayload,
+	UserData, UserSigninPayload,
 	UserSigninResponse,
 	UserSignupPayload
 } from "../../../types"
@@ -68,7 +67,8 @@ export class AuthStore {
 		try {
 			const response = yield authApi.signin(payload)
 			this.states.errors.signin = false
-			const { token, ...userData } = response
+			const { token, profile, ...userData } = response
+			this.rootStore.userStore.setUserProfile(profile)
 			this.setMyData(userData, token)
 		} catch (e: any) {
 			this.states.errors.signin = e
@@ -78,7 +78,8 @@ export class AuthStore {
 	})
 
 	initializeUser() {
-		const userData = validateToken()
+		const tokenPayload = validateToken()
+		const userData = tokenPayload ? tokenPayload.userData : null
 		if (userData) {
 			this.setMyData(userData)
 		} else {

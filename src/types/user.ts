@@ -14,4 +14,12 @@ export interface UserData {
 
 export interface UserSigninResponse extends UserData {
 	token: string
+	profile: UserProfile
+}
+
+export interface UserProfile {
+	fullname: string
+	specialty: string
+	course: string
+	photo: File
 }

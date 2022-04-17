@@ -9,7 +9,7 @@ export const validateToken = () => {
   const decodedToken = decode<JwtPayload & UserData>(token)
 	const { exp, ...userData } = decodedToken
 	if (decodedToken.exp && (decodedToken.exp * 1000 > new Date().getTime())) {
-		return userData
+		return { token, userData: userData }
 	}
 	return false
 }
