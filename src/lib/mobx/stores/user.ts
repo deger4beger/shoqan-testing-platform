@@ -70,8 +70,9 @@ export class UserStore {
 		}
 	})
 
-	setUserProfile(profile: UserProfile) {
+	setUserProfile(profile: UserProfile | null, fullClean=false) {
 		this.profile = profile
+		if (fullClean) this.isInitialized = false
 	}
 
 }

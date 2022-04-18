@@ -25,8 +25,11 @@ const UserCabinet = () => {
   const [photo, setPhoto] = useState<null | FileList>(null)
 
   useEffect(() => {
-  	if (!userStore.profile && !userStore.isInitialized) {
+  	if (!userStore.profile || !userStore.isInitialized) {
   		userStore.getCabinetData()
+  	}
+  	return () => {
+  		userStore.setUserProfile(null, true)
   	}
   }, [])
 
@@ -53,7 +56,7 @@ const UserCabinet = () => {
 		})
 	}
 
-	if (!userStore.isInitialized) {
+	if (!userStore.isInitialized || userStore.states.loading.base) {
 		return <Preloader />
 	}
 
