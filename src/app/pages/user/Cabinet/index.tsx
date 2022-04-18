@@ -25,7 +25,7 @@ const UserCabinet = () => {
   const [photo, setPhoto] = useState<null | FileList>(null)
 
   useEffect(() => {
-  	if (!userStore.profile) {
+  	if (!userStore.profile && !userStore.isInitialized) {
   		userStore.getCabinetData()
   	}
   }, [])
