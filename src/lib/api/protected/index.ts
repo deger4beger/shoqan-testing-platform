@@ -10,8 +10,12 @@ const authInstance = axios.create({
 authInstance.interceptors.request.use(protectedInterceptor)
 
 export const userApi = {
-  sendProfile(payload: any): Promise<void> {
-    return authInstance.post<void>("user/profile/", payload)
+	getProfile(): Promise<UserProfile> {
+		return authInstance.get<UserProfile>("user/profile/")
+      .then(res => res.data)
+	},
+  sendProfile(payload: any): Promise<UserProfile> {
+    return authInstance.post<UserProfile>("user/profile/", payload)
       .then(res => res.data)
   }
 }

@@ -8,11 +8,14 @@ export class UserStore {
 	rootStore: RootStore
 
 	profile = null as null | UserProfile
+	isInitialized = false
 	states = {
 		loading: {
+			base: false,
 			profile: false
 		},
 		errors: {
+			base: false,
 			profile: false
 		}
 	}
@@ -46,6 +49,24 @@ export class UserStore {
 			this.states.errors.profile = e
 		} finally {
 			this.states.loading.profile = false
+		}
+	})
+
+	getCabinetData = flow(function* (
+		this: UserStore
+	) {
+		this.states.loading.base = true
+		try {
+			const response = yield userApi.getProfile()
+			this.states.errors.base = false
+			if (response) {
+				this.setUserProfile(response)
+			}
+			this.isInitialized = true
+		} catch (e: any) {
+			this.states.errors.base = e
+		} finally {
+			this.states.loading.base = false
 		}
 	})
 

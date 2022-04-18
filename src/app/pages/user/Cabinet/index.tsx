@@ -1,18 +1,17 @@
-import React, {useState} from "react"
+import React, { useEffect, useState} from "react"
 import {
-	Avatar,
 	Button,
 	Combobox,
 	FilePicker,
 	Pane,
-	SelectMenu,
-	SendMessageIcon, Text, TextInputField,
+	SendMessageIcon, TextInputField,
 	Heading,
 	WarningSignIcon
 } from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
 import { observer } from "mobx-react"
 import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
+import Preloader from "../../../components/reusable/Preloader"
 
 const UserCabinet = () => {
 
@@ -24,6 +23,12 @@ const UserCabinet = () => {
   	course: ""
   })
   const [photo, setPhoto] = useState<null | FileList>(null)
+
+  useEffect(() => {
+  	if (!userStore.profile) {
+  		userStore.getCabinetData()
+  	}
+  }, [])
 
   const isFormDisabled = !!userStore.profile
 
@@ -46,6 +51,10 @@ const UserCabinet = () => {
 			...formData,
 			photo: (photo as FileList)[0]
 		})
+	}
+
+	if (!userStore.isInitialized) {
+		return <Preloader />
 	}
 
   return (
