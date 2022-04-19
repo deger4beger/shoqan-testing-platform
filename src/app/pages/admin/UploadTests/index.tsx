@@ -9,20 +9,12 @@ import {
 } from "evergreen-ui"
 
 import DocxUploader from "../../../components/singletone/DocxUploader"
+import MultipleSelect from "../../../components/reusable/MultipleSelect"
 
 const UploadTests = () => {
 
-	const [formData, setFormData] = useState({
-		competence: undefined,
-		discipline: undefined
-	})
-
-	const setSelectedField = (item: SelectMenuItem, fieldName: keyof typeof formData) => {
-		setFormData(prev => ({
-			...prev,
-			[fieldName]: item.value
-		}))
-	}
+	const [discipline, setDiscipline] = useState<undefined | string>(undefined)
+	const [competencies, setCompetencies] = useState<string[]>([])
 
 	const onFormConfirm = ({
 		file,
@@ -32,7 +24,7 @@ const UploadTests = () => {
 		rejectHandler: () => void
 	}) => {
 		return () => {
-			console.log(formData, file, rejectHandler)
+			console.log(discipline, competencies, file)
 		}
 	}
 
@@ -49,26 +41,10 @@ const UploadTests = () => {
 					Загрузка нового теста
 				</Heading>
 			</Pane>
-			<SelectMenu
-        hasTitle={false}
-        onSelect={(item: SelectMenuItem) => setSelectedField(item, "competence")}
-        selected={formData.competence}
-        options={[
-          "Apple", "Apricot",
-          "Banana", "Cherry",
-          "Cucumber"]
-          .map(
-            (label) => ({label, value: label})
-          )}
-      >
-        <Button width="100%" marginBottom={20}>
-          Выберите компетенцию . . .
-        </Button>
-      </SelectMenu>
       <SelectMenu
         hasTitle={false}
-        onSelect={(item: SelectMenuItem) => setSelectedField(item, "discipline")}
-        selected={formData.discipline}
+        onSelect={(item: SelectMenuItem) => setDiscipline(item.value as string)}
+        selected={discipline}
         options={[
           "Apple", "Apricot",
           "Banana", "Cherry",
@@ -78,9 +54,15 @@ const UploadTests = () => {
           )}
       >
         <Button width="100%" marginBottom={20}>
-          Выберите дисциплину . . .
+          { discipline || "Выберите дисциплину . . ." }
         </Button>
       </SelectMenu>
+      <MultipleSelect
+      	title="Выберите компетенции . . ."
+      	values={["Компетенция1", "Компетенция2", "Компетенция3"]}
+      	selectedItemsState={competencies}
+      	setSelectedItems={setCompetencies}
+      />
 			<DocxUploader>
 				{(fileData) =>
 					<Button
