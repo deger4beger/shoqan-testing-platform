@@ -1,5 +1,6 @@
 import React from "react"
 import { FileCard, FileUploader, Pane } from "evergreen-ui"
+import { observer } from "mobx-react"
 
 interface ChildrenParams {
   file: File
@@ -53,4 +54,4 @@ const DocxUploader: React.FC<DocxUploaderProps> = ({children}) => {
   )
 }
 
-export default DocxUploader
+export default observer(DocxUploader)

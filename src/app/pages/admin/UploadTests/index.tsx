@@ -38,6 +38,7 @@ const UploadTests = () => {
 			})
 			if (!testStore.states.errors.upload) {
 				notify("Тест успешно загружен", "success")
+				rejectHandler()
 			}
 		}
 	}
