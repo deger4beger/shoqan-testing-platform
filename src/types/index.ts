@@ -1,2 +1,5 @@
 export * from "./user"
 export * from "./certificate"
+export * from "./test"
+export * from "./discipline"
+export * from "./competence"

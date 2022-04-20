@@ -40,7 +40,6 @@ export class UserStore {
 			})
 			data.append("photo", photo)
 			data.append("userProfile", blob)
-
 			const response = yield userApi.sendProfile(data)
 
 			this.states.errors.profile = false

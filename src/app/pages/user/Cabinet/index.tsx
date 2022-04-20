@@ -24,6 +24,8 @@ const UserCabinet = () => {
   })
   const [photo, setPhoto] = useState<null | FileList>(null)
 
+  const isBtnDisabled = Object.values(formData).some(el => !el) || !photo
+
   useEffect(() => {
   	if (!userStore.profile || !userStore.isInitialized) {
   		userStore.getCabinetData()
@@ -119,6 +121,7 @@ const UserCabinet = () => {
 			        		appearance="primary"
 			        		intent="success"
 			        		onClick={onFormConfirm}
+			        		disabled={isBtnDisabled}
 			        		isLoading={userStore.states.loading.profile}
 			        	>
 			        	<SendMessageIcon marginRight={16} />

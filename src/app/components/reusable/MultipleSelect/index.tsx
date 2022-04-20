@@ -19,12 +19,15 @@ const MultipleSelect: React.FC<MultipleSearchProps> = ({
   )
   const [selectedItemNamesState, setSelectedItemNames] = React.useState(null)
 
+  const [filter, setFilter] = React.useState('')
+
   return (
     <SelectMenu
       isMultiSelect
       hasTitle={false}
       options={options}
       selected={selectedItemsState}
+      onFilterChange={(filter) => setFilter(filter)}
       onSelect={(item) => {
         const selected = [...selectedItemsState, item.value]
         const selectedItems = selected

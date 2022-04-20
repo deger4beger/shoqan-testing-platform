@@ -8,16 +8,25 @@ interface CertificatesTableProps {
 	certificates: Certificate[]
 }
 
-const CertificatesTable = ({ title, certificates, isSearchShown=false }) => {
+const CertificatesTable: React.FC<CertificatesTableProps> = ({
+	title,
+	certificates,
+	isSearchShown=false
+}) => {
 
 	const [isDialogShown, setIsDialogShown] = useState(false)
 	const [selectedCertificateData, setSelectedCertificateData] = useState<null | Certificate>(null)
+	const [filter, setFilter] = useState<string>("")
 
 	const dialogTitle = `Сертификат №${selectedCertificateData?.id}`
 
 	const onCertificateClick = (certificate) => {
 		setSelectedCertificateData(certificate)
 		setIsDialogShown(true)
+	}
+
+	const onFilterChange = (e: any) => {
+		setFilter(e)
 	}
 
 	return (
@@ -35,7 +44,11 @@ const CertificatesTable = ({ title, certificates, isSearchShown=false }) => {
 			</Pane>
 			<Table width="100%">
 			  <Table.Head>
-			    { isSearchShown ? <Table.SearchHeaderCell placeholder="Поиск" /> :
+			    { isSearchShown ? <Table.SearchHeaderCell
+			    			placeholder="Поиск"
+			    			value={filter}
+			    			onChange={onFilterChange}
+			    		/> :
 			    	<Table.TextHeaderCell>Имя прошедшего</Table.TextHeaderCell> }
 			    <Table.TextHeaderCell>Название теста</Table.TextHeaderCell>
 			    <Table.TextHeaderCell>Количество баллов <Heading size={100} display="inline-block">
@@ -43,7 +56,7 @@ const CertificatesTable = ({ title, certificates, isSearchShown=false }) => {
 			   	</Heading></Table.TextHeaderCell>
 			  </Table.Head>
 			  <Table.VirtualBody height={500}>
-			    {certificates.map((certificate) => (
+			    {certificates.filter(el => el.fullName.toLowerCase().includes(filter)).map((certificate) => (
 			      <Table.Row key={certificate.id} isSelectable onSelect={() => onCertificateClick(certificate)}>
 			        <Table.TextCell>{certificate.fullName}</Table.TextCell>
 			        <Table.TextCell>{certificate.testName}</Table.TextCell>

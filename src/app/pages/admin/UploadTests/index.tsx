@@ -1,20 +1,25 @@
 import React, { useState } from "react"
 import {
-	Button,
-	Heading,
+	Button, CornerDialog, Heading,
 	Pane,
 	SelectMenu,
 	SelectMenuItem,
 	SendMessageIcon
 } from "evergreen-ui"
+import { observer } from "mobx-react"
 
 import DocxUploader from "../../../components/singletone/DocxUploader"
 import MultipleSelect from "../../../components/reusable/MultipleSelect"
+import { useStores } from "../../../../lib/mobx"
+import { notify } from "../../helpers"
+import { Competence, Discipline } from "../../../../types"
 
 const UploadTests = () => {
 
-	const [discipline, setDiscipline] = useState<undefined | string>(undefined)
-	const [competencies, setCompetencies] = useState<string[]>([])
+	const [discipline, setDiscipline] = useState<undefined | Discipline>(undefined)
+	const [competencies, setCompetencies] = useState<Competence[]>([])
+
+	const { testStore } = useStores()
 
 	const onFormConfirm = ({
 		file,
@@ -23,8 +28,17 @@ const UploadTests = () => {
 		file: File,
 		rejectHandler: () => void
 	}) => {
-		return () => {
-			console.log(discipline, competencies, file)
+		return async () => {
+			await testStore.uploadTest({
+				info: {
+					discipline: discipline!,
+					competencies
+				},
+				file
+			})
+			if (!testStore.states.errors.upload) {
+				notify("Тест успешно загружен", "success")
+			}
 		}
 	}
 
@@ -43,12 +57,11 @@ const UploadTests = () => {
 			</Pane>
       <SelectMenu
         hasTitle={false}
-        onSelect={(item: SelectMenuItem) => setDiscipline(item.value as string)}
+        hasFilter={false}
+        onSelect={(item: SelectMenuItem) => setDiscipline(item.value as Discipline)}
         selected={discipline}
-        options={[
-          "Apple", "Apricot",
-          "Banana", "Cherry",
-          "Cucumber"]
+        options={
+        	Object.values(Discipline)
           .map(
             (label) => ({label, value: label})
           )}
@@ -59,9 +72,9 @@ const UploadTests = () => {
       </SelectMenu>
       <MultipleSelect
       	title="Выберите компетенции . . ."
-      	values={["Компетенция1", "Компетенция2", "Компетенция3"]}
+      	values={Object.values(Competence)}
       	selectedItemsState={competencies}
-      	setSelectedItems={setCompetencies}
+      	setSelectedItems={setCompetencies as any}
       />
 			<DocxUploader>
 				{(fileData) =>
@@ -70,6 +83,8 @@ const UploadTests = () => {
 							marginTop={20}
 							appearance="primary"
 							intent="success"
+							disabled={!discipline || !competencies.length || !fileData.file}
+							isLoading={testStore.states.loading.upload}
 							onClick={onFormConfirm(fileData)}
 						>
 		      	<SendMessageIcon marginRight={16} />
@@ -81,4 +96,4 @@ const UploadTests = () => {
 	)
 }
 
-export default UploadTests
+export default observer(UploadTests)
