@@ -26,6 +26,7 @@ const MultipleSelect: React.FC<MultipleSearchProps> = ({
       isMultiSelect
       hasTitle={false}
       options={options}
+      width={500}
       selected={selectedItemsState}
       onFilterChange={(filter) => setFilter(filter)}
       onSelect={(item) => {
