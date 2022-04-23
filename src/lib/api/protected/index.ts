@@ -22,7 +22,7 @@ export const userApi = {
 
 export const testApi = {
 	uploadTest(payload: any): Promise<void> {
-		return instance.post<void>("admin/test/", payload)
+		return instance.post<void>("test/", payload)
 			.then(res => res.data)
 	}
 }

@@ -99,6 +99,7 @@ export class AuthStore {
 			email: ""
 		}
 		localStorage.removeItem("key")
+		this.rootStore.userStore.setUserProfile(null, true)
 	}
 
 	setMyData(data: UserData, userToken: string | null = null) {

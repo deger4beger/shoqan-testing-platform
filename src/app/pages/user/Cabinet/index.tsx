@@ -27,12 +27,12 @@ const UserCabinet = () => {
   const isBtnDisabled = Object.values(formData).some(el => !el) || !photo
 
   useEffect(() => {
-  	if (!userStore.profile || !userStore.isInitialized) {
+  	if (!userStore.isInitialized) {
   		userStore.getCabinetData()
   	}
-  	return () => {
-  		userStore.setUserProfile(null, true)
-  	}
+  	// return () => {
+  	// 	userStore.setUserProfile(null, true)
+  	// }
   }, [])
 
   const isFormDisabled = !!userStore.profile

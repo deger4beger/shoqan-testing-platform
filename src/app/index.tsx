@@ -11,7 +11,7 @@ import Header from "./components/singletone/Header"
 
 function App() {
 
-	const { authStore } = useStores()
+	const { authStore, userStore } = useStores()
 
 	useEffect(() => {
 		authStore.initializeUser()
@@ -29,6 +29,7 @@ function App() {
   			<Header
   				userIdentifier={authStore.userData.email as string}
   				isAdmin={authStore.userData.isAdmin as boolean}
+          isProfileFilled={!!userStore.profile}
   			/>
   		}
   		<AppRouter isAdmin={authStore.userData.isAdmin} />

@@ -6,10 +6,11 @@ import { useStores } from "../../../../lib/mobx"
 
 interface HeaderProps {
   isAdmin: boolean
-  userIdentifier: string
+  userIdentifier: string,
+  isProfileFilled: boolean
 }
 
-const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
+const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier, isProfileFilled }) => {
 
   const {
     currentRoutes,
@@ -34,6 +35,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
 
   const { authStore } = useStores()
   const currentLocation = useLocation().pathname
+  const isTabDisabled = !isProfileFilled && !isAdmin
 
   const [tabs] = React.useState(currentRouteNames)
   const [selectedIndex, setSelectedIndex] = React.useState<
@@ -68,6 +70,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier }) => {
                 key={tab}
                 id={tab}
                 appearance="primary"
+                disabled={isTabDisabled}
                 onSelect={() => setSelectedIndex(index)}
                 isSelected={index === selectedIndex}
                 aria-controls={`panel-${tab}`}

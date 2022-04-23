@@ -2,6 +2,7 @@ import React from "react"
 
 import { Certificate } from "../../../../types"
 import CertificatesTable from "../../../components/templates/CertificatesTable"
+import { withProfile } from "../../../hocs/withProfile"
 
 const MyCertificates = () => {
 
@@ -69,4 +70,4 @@ const MyCertificates = () => {
 	/>
 }
 
-export default MyCertificates
+export default withProfile(MyCertificates)

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Pane } from "evergreen-ui"
+import { withProfile } from "../../../hocs/withProfile"
 
 const MyStudy = () => {
 	return (
@@ -9,4 +10,4 @@ const MyStudy = () => {
 	)
 }
 
-export default MyStudy
+export default withProfile(MyStudy)
