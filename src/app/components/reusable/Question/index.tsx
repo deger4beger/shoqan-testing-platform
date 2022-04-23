@@ -5,7 +5,7 @@ interface QuestionProps {
 	id: number
 	question: string
 	answers: string[]
-	selected: string | null
+	selected: string | undefined
 	setSelected: (id: number, value: string) => void
 }
 
@@ -16,7 +16,6 @@ const Question: React.FC<QuestionProps> = ({
 	selected,
 	setSelected
 }) => {
-
 	return (
 		<Pane
 				flexBasis="50%"
@@ -29,10 +28,18 @@ const Question: React.FC<QuestionProps> = ({
 	      label={question}
 	      size={16}
 	      value={selected as any}
-	      options={answers.map(el => ({
-	      	label: el,
-	      	value: el
-	      }))}
+	      isRequired
+	      options={[
+	      	{
+	      		label: "--",
+	      		value: "",
+	      		isDisabled: true
+	      	},
+	      	...answers.map(el => ({
+	      		label: el,
+	      		value: el
+	      	}))
+	      ]}
 	      onChange={event => setSelected(id, event.target.value)}
 	    />
 		</Pane>

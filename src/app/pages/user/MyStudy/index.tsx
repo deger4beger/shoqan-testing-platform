@@ -11,6 +11,9 @@ const MyStudy = () => {
 
 	useEffect(() => {
 		testStore.getStressData()
+		return () => {
+			testStore.resetData()
+		}
 	}, [])
 
 	if (testStore.passed === null) {

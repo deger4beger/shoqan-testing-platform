@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heading, Pane, WarningSignIcon } from "evergreen-ui"
+import { Button, Heading, Pane, WarningSignIcon } from "evergreen-ui"
 import { Question } from "../../../../../types"
 import QuestionComponent from "../../../../components/reusable/Question"
 
@@ -17,11 +17,15 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
 		setSelected(newSelected)
 	}
 
+	const onSubmitTest = () => {
+		console.log(selected)
+	}
+
 	return (
 		<Pane width="100%" display="flex" alignItems="center" flexDirection="column">
 			<Heading size={600} borderBottom="2px solid #c1c4d6" paddingBottom={6}>
   			<WarningSignIcon color="warning" marginRight={16} />
-  			Пройдите психологический мини-тест, чтобы продолжить дальше
+  			Пройдите психологический тест, чтобы продолжить дальше
   		</Heading >
   		<Pane display="flex" width="60%" flexWrap="wrap" marginTop={30}>
 	  		{ test.map((elem, index) => {
@@ -35,6 +39,16 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
 	  			/>
 	  		}) }
   		</Pane>
+  		<Button
+  				appearance="primary"
+  				size="large"
+  				marginTop={40}
+  				marginBottom={100}
+  				onClick={onSubmitTest}
+  				disabled={selected.some(el => !el)}
+  			>
+  			Завершить тест
+  		</Button>
 		</Pane>
 	)
 }
