@@ -76,7 +76,7 @@ const UserCabinet = () => {
 	    				<Pane>
 			      		<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
 			      			<WarningSignIcon color="warning" marginRight={16} />
-			      			Заполните анкету, чтобы продолжить дальше:
+			      			Заполните анкету, чтобы продолжить дальше
 			      		</Heading>
 		      		</Pane>
 			      	<TextInputField

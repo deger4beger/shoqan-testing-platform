@@ -1,7 +1,7 @@
 import axios from "axios"
 
 import { protectedInterceptor } from "./index.interceptors"
-import { UserProfile } from "../../../types"
+import { StressData, UserProfile } from "../../../types"
 
 const instance = axios.create({
     baseURL: "http://localhost:8000" // https://shoqan-platform.herokuapp.com
@@ -23,6 +23,10 @@ export const userApi = {
 export const testApi = {
 	uploadTest(payload: any): Promise<void> {
 		return instance.post<void>("test/", payload)
+			.then(res => res.data)
+	},
+	getStressData(): Promise<StressData> {
+		return instance.get<StressData>("test/stress/")
 			.then(res => res.data)
 	}
 }

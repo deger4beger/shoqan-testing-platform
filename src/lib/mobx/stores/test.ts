@@ -7,12 +7,16 @@ export class TestStore {
 
 	rootStore: RootStore
 
+	passed = null as null | boolean
+	psychologyTest = null as null | Object
 	states = {
 		loading: {
-			upload: false
+			upload: false,
+			stress: false
 		},
 		errors: {
-			upload: false
+			upload: false,
+			stress: false
 		}
 	}
 
@@ -47,6 +51,24 @@ export class TestStore {
 			this.states.errors.upload = e
 		} finally {
 			this.states.loading.upload = false
+		}
+	})
+
+	getStressData = flow(function* (
+		this: TestStore
+	) {
+		this.states.loading.stress = true
+		try {
+
+			const data = yield testApi.getStressData()
+			this.states.errors.stress = false
+
+			console.log(data)
+
+		} catch (e: any) {
+			this.states.errors.stress = e
+		} finally {
+			this.states.loading.stress = false
 		}
 	})
 

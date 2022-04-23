@@ -45,7 +45,7 @@ const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
     }
   }
 
-  return <Pane paddingTop={isAuthorized ? 100 : 0}>
+  return <Pane paddingTop={isAuthorized ? 60 : 0}>
     { getRoutes() }
   </Pane>
 
