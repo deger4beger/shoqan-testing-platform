@@ -52,7 +52,7 @@ const UploadTests = () => {
 				margin="auto"
 			>
 			<Pane marginBottom={30}>
-				<Heading size={700} borderBottom="1px solid black">
+				<Heading size={600} borderBottom="2px solid #c1c4d6" paddingX={20} paddingBottom={4}>
 					Загрузка нового теста
 				</Heading>
 			</Pane>

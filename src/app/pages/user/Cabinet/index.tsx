@@ -2,10 +2,8 @@ import React, { useEffect, useState} from "react"
 import {
 	Button,
 	Combobox,
-	FilePicker,
-	Pane,
+	FilePicker, Heading, Pane,
 	SendMessageIcon, TextInputField,
-	Heading,
 	WarningSignIcon
 } from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
@@ -74,7 +72,7 @@ const UserCabinet = () => {
     			{ !isFormDisabled ? (
     				<>
 	    				<Pane>
-			      		<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
+			      		<Heading size={600} borderBottom="2px solid #c1c4d6" paddingBottom={6} textAlign="center">
 			      			<WarningSignIcon color="warning" marginRight={16} />
 			      			Заполните анкету, чтобы продолжить дальше
 			      		</Heading>

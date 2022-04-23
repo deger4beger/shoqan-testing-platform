@@ -34,7 +34,8 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier, isProfileFille
   }())
 
   const { authStore } = useStores()
-  const currentLocation = useLocation().pathname
+  let currentLocation = useLocation().pathname
+  currentLocation = !isAdmin ? "/cabinet" : currentLocation
   const isTabDisabled = !isProfileFilled && !isAdmin
 
   const [tabs] = React.useState(currentRouteNames)

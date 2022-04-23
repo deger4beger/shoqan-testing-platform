@@ -10,7 +10,12 @@ export interface UploadTestPayload {
 	file: File
 }
 
+export interface Question {
+	question: string
+	answers: string[]
+}
+
 export interface StressData {
 	passed: boolean
-	test: Object
+	test: Question[]
 }

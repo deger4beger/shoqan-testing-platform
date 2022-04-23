@@ -15,7 +15,7 @@ const UserProfileFilled: React.FC<UserProfileFilledProps> = ({profile}) => {
 		<>
 			<Pane marginBottom={20}>
 				<Pane textAlign="center">
-					<Heading size={700} borderBottom="1px solid black" paddingBottom={6}>
+					<Heading size={600} borderBottom="2px solid #c1c4d6" paddingBottom={6}>
 	    			Ваша анкета
 	    		</Heading>
 				</Pane>
@@ -26,7 +26,7 @@ const UserProfileFilled: React.FC<UserProfileFilledProps> = ({profile}) => {
 					/>
 				</Pane>
 			</Pane>
-			<Pane>
+			<Pane display="flex" flexDirection="column">
 				<Heading marginTop={10} size={500}>
 					ФИО: <Text size={500}>
 						{ data.fullname }

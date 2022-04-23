@@ -2,13 +2,14 @@ import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
 import { UploadTestPayload } from "../../../types/test"
 import { testApi } from "../../api/protected"
+import { Question } from "../../../types"
 
 export class TestStore {
 
 	rootStore: RootStore
 
 	passed = null as null | boolean
-	psychologyTest = null as null | Object
+	psychologyTest = null as null | Question[]
 	states = {
 		loading: {
 			upload: false,
@@ -63,7 +64,9 @@ export class TestStore {
 			const data = yield testApi.getStressData()
 			this.states.errors.stress = false
 
-			console.log(data)
+			const { passed, test } = data
+			this.passed = passed
+			this.psychologyTest = test
 
 		} catch (e: any) {
 			this.states.errors.stress = e

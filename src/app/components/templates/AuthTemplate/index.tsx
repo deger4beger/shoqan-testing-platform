@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pane, Heading, Button, Text, TextInputField, UserIcon } from 'evergreen-ui'
+import { Heading, Pane, Button, Text, TextInputField, UserIcon } from 'evergreen-ui'
 import { Link } from "react-router-dom"
 
 interface AuthTemplateProps {
@@ -46,8 +46,14 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 					borderWidth={2}
 					padding={40}
 				>
-				<Pane borderBottom="1px solid black" marginBottom="30px">
-					<Heading size={800}>
+				<Pane
+						borderBottom="2px solid #c1c4d6"
+						paddingBottom={4}
+						width="60%"
+						textAlign="center"
+						marginBottom="30px"
+					>
+					<Heading size={600}>
 						{title}
 					</Heading>
 				</Pane>
