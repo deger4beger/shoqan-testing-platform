@@ -4,3 +4,7 @@
 body {
   font-family: 'Jost', sans-serif;
 }
+
+.main {
+	min-height: calc(100vh - 76px);
+}

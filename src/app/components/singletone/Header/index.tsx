@@ -54,6 +54,8 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier, isProfileFille
         borderBottom={true}
         borderWidth={2}
         borderColor="#c1c4d6"
+        position="relative"
+        zIndex={10}
       >
         <Tablist
           marginRight={12}

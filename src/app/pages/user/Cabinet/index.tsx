@@ -2,9 +2,8 @@ import React, { useEffect, useState} from "react"
 import {
 	Button,
 	Combobox,
-	FilePicker, Heading, Pane,
-	SendMessageIcon, TextInputField,
-	WarningSignIcon
+	FilePicker, Heading, InfoSignIcon, Pane,
+	SendMessageIcon, TextInputField
 } from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
 import { observer } from "mobx-react"
@@ -73,7 +72,7 @@ const UserCabinet = () => {
     				<>
 	    				<Pane>
 			      		<Heading size={600} borderBottom="2px solid #c1c4d6" paddingBottom={6} textAlign="center">
-			      			<WarningSignIcon color="warning" marginRight={16} />
+			      			<InfoSignIcon color="info" marginRight={16} />
 			      			Заполните анкету, чтобы продолжить дальше
 			      		</Heading>
 		      		</Pane>
@@ -117,7 +116,6 @@ const UserCabinet = () => {
 			        		width="100%"
 			        		marginTop={30}
 			        		appearance="primary"
-			        		intent="success"
 			        		onClick={onFormConfirm}
 			        		disabled={isBtnDisabled}
 			        		isLoading={userStore.states.loading.profile}

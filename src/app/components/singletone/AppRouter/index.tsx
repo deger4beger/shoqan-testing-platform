@@ -9,8 +9,6 @@ interface AppRouterProps {
 
 const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
 
-  const isAuthorized = (isAdmin !== null)
-
   const getRoutes = () => {
     switch (isAdmin) {
       case null:
@@ -45,9 +43,9 @@ const AppRouter: React.FC<AppRouterProps> = ({ isAdmin }) => {
     }
   }
 
-  return <Pane paddingTop={isAuthorized ? 60 : 0}>
+  return <>
     { getRoutes() }
-  </Pane>
+  </>
 
 }
 

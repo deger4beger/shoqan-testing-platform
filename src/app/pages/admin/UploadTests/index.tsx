@@ -83,7 +83,6 @@ const UploadTests = () => {
 							width="100%"
 							marginTop={20}
 							appearance="primary"
-							intent="success"
 							disabled={!discipline || !competencies.length || !fileData.file}
 							isLoading={testStore.states.loading.upload}
 							onClick={onFormConfirm(fileData)}
