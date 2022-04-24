@@ -42,10 +42,13 @@ const Common = () => {
 		  		return <TestCard
 		  			key={test.filename}
 		  			title={test.filename}
-		  			disabled={test.passed}
+		  			passed={test.passed}
 		  		/>
 	  		}
 	  	) }
+	  	{ !isLoading && !testStore.testsForDiscipline?.length && <Pane textAlign="center" paddingTop={60}>
+	  		Тестов для данной дисциплины еще нет
+	  	</Pane> }
   	</Pane>
   	{ isLoading && <Preloader /> }
   </Pane>

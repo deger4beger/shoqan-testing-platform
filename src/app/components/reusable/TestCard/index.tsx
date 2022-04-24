@@ -1,7 +1,6 @@
 import React from "react"
 import {
-	ArrowRightIcon,
-	Button,
+	ArrowRightIcon, BanCircleIcon, Button,
 	Card,
 	Pane,
 	Strong,
@@ -10,12 +9,12 @@ import {
 
 interface TestCardProps {
 	title: string
-	disabled: boolean
+	passed: null | boolean
 }
 
 const TestCard: React.FC<TestCardProps> = ({
 	title,
-	disabled
+	passed
 }) => {
 	return (
 		<Button
@@ -26,10 +25,11 @@ const TestCard: React.FC<TestCardProps> = ({
 				display="flex"
 				alignItems="center"
 				justifyContent="flex-start"
-				disabled={disabled}
+				disabled={passed !== null}
 			>
-			{ !disabled && <ArrowRightIcon marginRight={16} /> }
-			{ disabled && <TickCircleIcon color="success" marginRight={16} /> }
+			{ passed === null && <ArrowRightIcon marginRight={16} /> }
+			{ passed && <TickCircleIcon color="success" marginRight={16} /> }
+			{ passed === false && <BanCircleIcon color="danger" marginRight={16} /> }
 			<Strong>{ title }</Strong>
 		</Button>
 	)
