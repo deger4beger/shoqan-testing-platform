@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
+import { observer } from "mobx-react"
 import { Button, Heading, InfoSignIcon, Pane } from "evergreen-ui"
 import { Question } from "../../../../../types"
 import QuestionComponent from "../../../../components/reusable/Question"
+import { useStores } from "../../../../../lib/mobx"
+import { notify } from "../../../helpers"
 
-interface PsychologyProps {
-	test: Question[]
-}
+const Psychology: React.FC = () => {
 
-const Psychology: React.FC<PsychologyProps> = ({ test }) => {
+	const { testStore } = useStores()
+	const { psychologyTest: test } = testStore
 
-	const [selected, setSelected] = useState<string[]>([...Array(test.length - 1)])
+	const [selected, setSelected] = useState<string[]>([...Array(test!.length)])
 
 	const onSetSelected = (id: number, value: string) => {
 		const newSelected = [...selected]
@@ -17,8 +19,18 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
 		setSelected(newSelected)
 	}
 
-	const onSubmitTest = () => {
-		console.log(selected)
+	const onSubmitTest = async () => {
+		await testStore.postStressData({
+			answers: selected
+		})
+		if (!testStore.states.errors.stressPost) {
+			notify(
+				"Уровень вашей стрессоустойчивости появится в личном кабинете",
+				"success",
+				8,
+				"Тест успешно сдан !"
+			)
+		}
 	}
 
 	return (
@@ -28,7 +40,7 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
   			Пройдите психологический тест, чтобы продолжить дальше
   		</Heading >
   		<Pane display="flex" width="60%" flexWrap="wrap" marginTop={30}>
-	  		{ test.map((elem, index) => {
+	  		{ test!.map((elem, index) => {
 	  			return <QuestionComponent
 	  				key={index}
 	  				id={index}
@@ -45,6 +57,7 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
   				marginTop={40}
   				marginBottom={100}
   				onClick={onSubmitTest}
+  				isLoading={testStore.states.loading.stressPost}
   				disabled={selected.some(el => !el)}
   			>
   			Завершить тест
@@ -53,4 +66,4 @@ const Psychology: React.FC<PsychologyProps> = ({ test }) => {
 	)
 }
 
-export default Psychology
+export default observer(Psychology)

@@ -55,7 +55,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
 			    	(Максимум: 100)
 			   	</Heading></Table.TextHeaderCell>
 			  </Table.Head>
-			  <Table.VirtualBody height={500}>
+			  <Table.VirtualBody height={610}>
 			    {certificates.filter(el => el.fullName.toLowerCase().includes(filter)).map((certificate) => (
 			      <Table.Row key={certificate.id} isSelectable onSelect={() => onCertificateClick(certificate)}>
 			        <Table.TextCell>{certificate.fullName}</Table.TextCell>

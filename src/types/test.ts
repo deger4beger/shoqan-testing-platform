@@ -19,3 +19,5 @@ export interface StressData {
 	passed: boolean
 	test: Question[]
 }
+
+export interface Answers extends Omit<Question, "question"> {}

@@ -104,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier, isProfileFille
                 appearance="primary"
                 marginLeft= {20}
                 fontSize={14}
-                onClick={() =>
+                onSelect={() =>
                   authStore.logout()
                 }>
               <LogOutIcon />&nbsp;Выйти

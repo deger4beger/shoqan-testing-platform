@@ -4,6 +4,7 @@ import { withProfile } from "../../../hocs/withProfile"
 import { useStores } from "../../../../lib/mobx"
 import Preloader from "../../../components/reusable/Preloader"
 import Psychology from "./Psychology"
+import Common from "./Common"
 
 const MyStudy = () => {
 
@@ -20,11 +21,9 @@ const MyStudy = () => {
 		return <Preloader />
 	}
 
-	if (!testStore.passed) return <Psychology
-		test={testStore.psychologyTest!}
-	/>
+	if (!testStore.passed) return <Psychology />
 
-	return <div />
+	return <Common />
 
 }
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { FileCard, FileUploader, Pane } from "evergreen-ui"
+import { FileCard, FileUploader, MimeType, Pane } from "evergreen-ui"
 import { observer } from "mobx-react"
 
 interface ChildrenParams {
@@ -31,6 +31,7 @@ const DocxUploader: React.FC<DocxUploaderProps> = ({children}) => {
         maxFiles={1}
         onChange={handleChange}
         onRejected={handleRejected}
+        acceptedMimeTypes={[MimeType.docx]}
         renderFile={(file) => {
           const { name, size, type } = file
           const fileRejection = fileRejections.find((fileRejection) => (fileRejection as any).file === file)
