@@ -21,3 +21,12 @@ export interface StressData {
 }
 
 export interface Answers extends Omit<Question, "question"> {}
+
+export interface TestForDisciplineParams {
+	discipline: Discipline
+}
+
+export interface TestForDiscipline {
+	filename: string
+	passed: boolean
+}

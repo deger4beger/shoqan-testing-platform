@@ -1,36 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react"
 import { Heading, Pane, SegmentedControl } from "evergreen-ui"
+import { observer } from "mobx-react"
 import { Discipline } from "../../../../../types"
 import Preloader from "../../../../components/reusable/Preloader"
 import TestCard from "../../../../components/reusable/TestCard"
+import { useStores } from "../../../../../lib/mobx"
 
 const Common = () => {
 	const [options] = React.useState(Object.values(Discipline).map(el => ({
 		label: el,
 		value: el
 	})))
-  const [value, setValue] = React.useState(Discipline.ONE)
+  const [value, setValue] = React.useState<Discipline>(Discipline.ONE)
 
-  const tests = [
-  	{
-  		filename: "Тестирование по дисциплине аэродинамика 2 курс",
-  		competencies: ["Компетенция 1", "Компетенция 2"],
-  		passed: true
-  	},
-  	{
-  		filename: "Тестирование по дисциплине аэродинамика 2 курс",
-  		competencies: ["Компетенция 1", "Компетенция 2"],
-  		passed: true
-  	},
-  	{
-  		filename: "Тестирование по дисциплине аэродинамика 2 курс",
-  		competencies: ["Компетенция 1", "Компетенция 2"],
-  		passed: false
-  	}
-  ]
+  const { testStore } = useStores()
+  const isLoading = testStore.states.loading.testsForDisc
 
   useEffect(() => {
-  	console.log(value)
+  	testStore.getTestsForDiscipline({
+  		discipline: value
+  	})
   }, [value])
 
   return <Pane width="60%" margin="auto">
@@ -45,18 +34,21 @@ const Common = () => {
   		onChange={(value) => setValue(value as any)}
   		paddingBottom={16}
   		borderBottom="1px dashed #c1c4d6"
+  		disabled={isLoading}
   	/>
   	<Pane marginTop={36}>
-	  	{ tests.sort(test => test.passed ? 1 : -1).map(test => {
-	  		return <TestCard
-	  			title={test.filename}
-	  			list={test.competencies}
-	  			disabled={test.passed}
-	  		/>
-	  	}) }
+	  	{ !isLoading && testStore
+	  		.testsForDiscipline?.map(test => {
+		  		return <TestCard
+		  			key={test.filename}
+		  			title={test.filename}
+		  			disabled={test.passed}
+		  		/>
+	  		}
+	  	) }
   	</Pane>
-  	{ false && <Preloader /> }
+  	{ isLoading && <Preloader /> }
   </Pane>
 }
 
-export default Common
+export default observer(Common)

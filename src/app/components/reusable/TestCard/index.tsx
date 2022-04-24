@@ -10,13 +10,11 @@ import {
 
 interface TestCardProps {
 	title: string
-	list: string[]
 	disabled: boolean
 }
 
 const TestCard: React.FC<TestCardProps> = ({
 	title,
-	list,
 	disabled
 }) => {
 	return (

@@ -2,7 +2,7 @@ import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
 import { UploadTestPayload } from "../../../types/test"
 import { testApi } from "../../api/protected"
-import { Answers, Question } from "../../../types"
+import { Answers, Question, TestForDiscipline, TestForDisciplineParams } from "../../../types"
 
 export class TestStore {
 
@@ -10,16 +10,19 @@ export class TestStore {
 
 	passed = null as null | boolean
 	psychologyTest = null as null | Question[]
+	testsForDiscipline = null as null | TestForDiscipline[]
 	states = {
 		loading: {
 			upload: false,
 			stress: false,
-			stressPost: false
+			stressPost: false,
+			testsForDisc: false
 		},
 		errors: {
 			upload: false,
 			stress: false,
-			stressPost: false
+			stressPost: false,
+			testsForDisc: false
 		}
 	}
 
@@ -94,6 +97,25 @@ export class TestStore {
 			this.states.errors.stressPost = e
 		} finally {
 			this.states.loading.stressPost = false
+		}
+	})
+
+	getTestsForDiscipline = flow(function* (
+		this: TestStore,
+		payload: TestForDisciplineParams
+	) {
+		this.states.loading.testsForDisc = true
+		try {
+
+			const data = yield testApi.getTestByDiscipline(payload)
+			this.states.errors.testsForDisc = false
+
+			this.testsForDiscipline = data.sort(test => test.passed ? 1 : -1)
+
+		} catch (e: any) {
+			this.states.errors.testsForDisc = e
+		} finally {
+			this.states.loading.testsForDisc = false
 		}
 	})
 
