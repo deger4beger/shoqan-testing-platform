@@ -25,9 +25,9 @@ const UserCabinet = () => {
 
   useEffect(() => {
   	userStore.getCabinetData()
-  	// return () => {
-  	// 	userStore.setUserProfile(null, true)
-  	// }
+  	return () => {
+  		userStore.cleanData()
+  	}
   }, [])
 
   const isFormDisabled = !!userStore.profile

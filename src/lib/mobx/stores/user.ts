@@ -74,4 +74,8 @@ export class UserStore {
 		if (fullClean) this.isInitialized = false
 	}
 
+	cleanData() {
+		this.isInitialized = false
+	}
+
 }
