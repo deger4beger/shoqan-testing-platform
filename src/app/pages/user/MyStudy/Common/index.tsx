@@ -14,13 +14,17 @@ const Common = () => {
   const [value, setValue] = React.useState<Discipline>(Discipline.ONE)
 
   const { testStore } = useStores()
-  const isLoading = testStore.states.loading.testsForDisc
 
   useEffect(() => {
   	testStore.getTestsForDiscipline({
   		discipline: value
   	})
   }, [value])
+
+  const isLoading = testStore.states.loading.testsForDisc
+  const onTestClick = (id: string) => {
+  	console.log(id)
+  }
 
   return <Pane width="60%" margin="auto">
   	<Pane marginBottom={30} textAlign="center">
@@ -41,6 +45,8 @@ const Common = () => {
 	  		.testsForDiscipline?.map(test => {
 		  		return <TestCard
 		  			key={test.filename}
+		  			id={test.id}
+		  			onClick={onTestClick}
 		  			title={test.filename}
 		  			passed={test.passed}
 		  		/>

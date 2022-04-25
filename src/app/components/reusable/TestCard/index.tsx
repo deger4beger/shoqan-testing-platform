@@ -8,11 +8,15 @@ import {
 } from "evergreen-ui"
 
 interface TestCardProps {
+	id: string
+	onClick: (id: string) => void
 	title: string
 	passed: null | boolean
 }
 
 const TestCard: React.FC<TestCardProps> = ({
+	id,
+	onClick,
 	title,
 	passed
 }) => {
@@ -25,11 +29,12 @@ const TestCard: React.FC<TestCardProps> = ({
 				display="flex"
 				alignItems="center"
 				justifyContent="flex-start"
+				onClick={() => onClick(id)}
 				disabled={passed !== null}
 			>
 			{ passed === null && <ArrowRightIcon marginRight={16} /> }
-			{ passed && <TickCircleIcon color="success" marginRight={16} /> }
-			{ passed === false && <BanCircleIcon color="danger" marginRight={16} /> }
+			{ passed && <TickCircleIcon marginRight={16} /> }
+			{ passed === false && <BanCircleIcon marginRight={16} /> }
 			<Strong>{ title }</Strong>
 		</Button>
 	)

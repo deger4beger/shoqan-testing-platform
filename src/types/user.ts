@@ -25,4 +25,5 @@ export interface UserProfilePayload {
 
 export interface UserProfile extends Omit<UserProfilePayload, "photo"> {
 	photo: string
+	stress: null | string
 }

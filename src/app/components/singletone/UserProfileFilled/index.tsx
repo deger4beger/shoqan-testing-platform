@@ -42,6 +42,11 @@ const UserProfileFilled: React.FC<UserProfileFilledProps> = ({profile}) => {
 						{ data.course }
 					</Text>
 				</Heading>
+				<Heading marginTop={10} size={500}>
+					Уровень стрессоустойчивости: <Text size={500}>
+						{ data.stress ? data.stress : "Не определен" }
+					</Text>
+				</Heading>
 			</Pane>
 		</>
 	)

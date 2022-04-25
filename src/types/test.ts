@@ -27,6 +27,7 @@ export interface TestForDisciplineParams {
 }
 
 export interface TestForDiscipline {
+	id: string
 	filename: string
 	passed: null | boolean
 }
