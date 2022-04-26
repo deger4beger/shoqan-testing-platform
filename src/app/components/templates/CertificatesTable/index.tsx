@@ -83,7 +83,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
         <Pane>
         	Результат: {selectedCertificateData?.score}
         </Pane>
-        И другое гавно
+        И т.д
       </Dialog>
 		</Pane>
 	)

@@ -8,54 +8,54 @@ const AllCertificates = () => {
 	const certificates: Certificate[] = [
 		{
 			id: "1",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
 			discipline: "ИТ в Горном деле",
 			competence: "3NBLH80H"
 		},
 		{
-			id: "12",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
-			score: 0,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
-		},
-		{
-			id: "123",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
+			id: "1",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
 			discipline: "ИТ в Горном деле",
 			competence: "3NBLH80H"
 		},
 		{
-			id: "1234",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
-			score: 100,
+			id: "1",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
+			score: 32,
 			passDate: "2022/13/04 13.22",
 			discipline: "ИТ в Горном деле",
 			competence: "3NBLH80H"
 		},
 		{
-			id: "12345",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
-			score: 96,
+			id: "1",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
+			score: 32,
 			passDate: "2022/13/04 13.22",
 			discipline: "ИТ в Горном деле",
 			competence: "3NBLH80H"
 		},
 		{
-			id: "123456",
-			fullName: "Марат Барат Багдан",
-			testName: "Тестирование по говну",
-			score: 54,
+			id: "1",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
+			score: 32,
+			passDate: "2022/13/04 13.22",
+			discipline: "ИТ в Горном деле",
+			competence: "3NBLH80H"
+		},
+		{
+			id: "1",
+			fullName: "Богдан",
+			testName: "Тестирование по ...",
+			score: 32,
 			passDate: "2022/13/04 13.22",
 			discipline: "ИТ в Горном деле",
 			competence: "3NBLH80H"
