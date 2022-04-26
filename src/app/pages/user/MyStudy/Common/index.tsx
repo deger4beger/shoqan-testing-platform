@@ -40,7 +40,7 @@ const Common = () => {
   		borderBottom="1px dashed #c1c4d6"
   		disabled={isLoading}
   	/>
-  	<Pane marginTop={36}>
+  	{ testStore.testsForDiscipline !== null && <Pane marginTop={36}>
 	  	{ !isLoading && testStore
 	  		.testsForDiscipline?.map(test => {
 		  		return <TestCard
@@ -52,11 +52,11 @@ const Common = () => {
 		  		/>
 	  		}
 	  	) }
-	  	{ !isLoading && !testStore.testsForDiscipline?.length && <Pane textAlign="center" paddingTop={60}>
+	  	{ (!isLoading && !testStore.testsForDiscipline?.length) && <Pane textAlign="center" paddingTop={60}>
 	  		Тестов для данной дисциплины еще нет
 	  	</Pane> }
-  	</Pane>
-  	{ isLoading && <Preloader /> }
+  	</Pane> }
+  	{ (isLoading || testStore.testsForDiscipline === null) && <Preloader /> }
   </Pane>
 }
 
