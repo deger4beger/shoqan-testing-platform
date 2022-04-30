@@ -1,8 +1,7 @@
 import React, { useEffect, useState} from "react"
-import {
-	Button,
+import { Button,
 	Combobox,
-	FilePicker, Heading, InfoSignIcon, Pane,
+	FilePicker, Heading, InfoSignIcon, InlineAlert, MimeType, Pane,
 	SendMessageIcon, TextInputField
 } from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
@@ -20,6 +19,7 @@ const UserCabinet = () => {
   	course: ""
   })
   const [photo, setPhoto] = useState<null | FileList>(null)
+  const [error, setError] = useState<null | string>(null)
 
   const isBtnDisabled = Object.values(formData).some(el => !el) || !photo
 
@@ -46,10 +46,42 @@ const UserCabinet = () => {
 		}))
 	}
 
-	const onFormConfirm = () => {
+	const onFormConfirm = async () => {
+		let localError = null as null | string
+		const photoFile = (photo as FileList)[0]
+		if (photoFile.size > 1000000) {
+			localError = "Максимальный размер фото - 1 мб."
+		}
+
+		if (!localError) {
+			const promise = new Promise((resolve, reject) => {
+				const img = new Image()
+		    img.src = window.URL.createObjectURL( photoFile )
+		    img.onload = function() {
+		      const width = (this as any).naturalWidth,
+		      height = (this as any).naturalHeight
+
+		      const format = height / width
+		      if ( !(1.2 <= format) || !(1.4 >= format) ) {
+		      	resolve("Разрешение фото должно быть 4:3")
+		      }
+		      resolve(null)
+		    }
+			})
+			const error = await promise
+			if (error) {
+				localError = error as any
+			}
+		}
+
+    if (localError) {
+    	setError(localError)
+    	return
+    }
+   	setError(null)
 		userStore.sendProfile({
 			...formData,
-			photo: (photo as FileList)[0]
+			photo: photoFile
 		})
 	}
 
@@ -109,7 +141,13 @@ const UserCabinet = () => {
 									placeholder="Фото"
 									marginBottom={10}
 									disabled={isFormDisabled}
+									accept={[MimeType.jpeg, MimeType.png]}
 								/>
+							{ error && (
+								<InlineAlert intent="danger" paddingTop={4} paddingLeft={2}>
+									{ error }
+						  	</InlineAlert>
+						  )}
 			        <Button
 			        		width="100%"
 			        		marginTop={30}

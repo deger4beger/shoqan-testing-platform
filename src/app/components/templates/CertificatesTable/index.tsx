@@ -70,6 +70,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
         title={dialogTitle}
         onCloseComplete={() => setIsDialogShown(false)}
         confirmLabel="Понятно"
+        cancelLabel="Закрыть"
       >
       	<Pane>
         	Идентификатор: {selectedCertificateData?.id}

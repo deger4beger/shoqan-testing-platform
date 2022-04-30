@@ -5,15 +5,17 @@ import { useStores } from "../../../../lib/mobx"
 import Preloader from "../../../components/reusable/Preloader"
 import Psychology from "./Psychology"
 import Common from "./Common"
+import Verification from "./Verification"
 
 const MyStudy = () => {
 
-	const { testStore } = useStores()
+	const { testStore, passingStore } = useStores()
 
 	useEffect(() => {
 		testStore.getStressData()
 		return () => {
 			testStore.resetData()
+			passingStore.resetData()
 		}
 	}, [])
 
@@ -22,6 +24,8 @@ const MyStudy = () => {
 	}
 
 	if (!testStore.passed) return <Psychology />
+
+	if (passingStore.testId) return <Verification />
 
 	return <Common />
 

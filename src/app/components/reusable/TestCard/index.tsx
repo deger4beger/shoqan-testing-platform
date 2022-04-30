@@ -49,9 +49,9 @@ const TestCard: React.FC<TestCardProps> = ({
 				{ passed === false && <BanCircleIcon marginRight={16} /> }
 				{ passed && <TickCircleIcon marginRight={16} /> }
 				<Strong>{ title }</Strong>
-				<Heading size={200} marginLeft={10}>
+				{ !passed && <Heading size={200} marginLeft={10}>
 	    		{ `(${!attempts ? 0 : attempts} / 3 попыток)` }
-	  		</Heading>
+	  		</Heading> }
 			</Pane>
 			<Dialog
         isShown={isDialogShown}
@@ -59,6 +59,7 @@ const TestCard: React.FC<TestCardProps> = ({
         onCloseComplete={() => setIsDialogShown(false)}
         onConfirm={onConfirm}
         confirmLabel="Да"
+        cancelLabel="Нет"
       >
 				Начать тестирование <Code>{title}</Code> ?
       </Dialog>

@@ -26,8 +26,8 @@ const DocxUploader: React.FC<DocxUploaderProps> = ({children}) => {
     <Pane width="100%">
       <FileUploader
         label="Загрузить тест"
-        description="Вы можете загрузить 1 файл с тестом, файл может быть весом до 50 мб."
-        maxSizeInBytes={50 * 1024 ** 2}
+        description="Вы можете загрузить 1 файл с тестом (.docx), файл может быть весом до 2 мб."
+        maxSizeInBytes={2 * 1024 ** 2}
         maxFiles={1}
         onChange={handleChange}
         onRejected={handleRejected}

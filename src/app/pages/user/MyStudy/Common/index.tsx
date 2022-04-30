@@ -13,7 +13,7 @@ const Common = () => {
 	})))
   const [value, setValue] = React.useState<Discipline>(Discipline.ONE)
 
-  const { testStore } = useStores()
+  const { testStore, passingStore } = useStores()
 
   useEffect(() => {
   	testStore.getTestsForDiscipline({
@@ -23,7 +23,7 @@ const Common = () => {
 
   const isLoading = testStore.states.loading.testsForDisc
   const onTestClick = (id: string) => {
-  	console.log(id)
+  	passingStore.setPassingTest(id)
   }
 
   return <Pane width="60%" margin="auto">
