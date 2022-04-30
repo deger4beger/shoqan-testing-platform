@@ -19,10 +19,10 @@ export class TestStore {
 			testsForDisc: false
 		},
 		errors: {
-			upload: false,
-			stress: false,
-			stressPost: false,
-			testsForDisc: false
+			upload: false as boolean | string,
+			stress: false as boolean | string,
+			stressPost: false as boolean | string,
+			testsForDisc: false as boolean | string
 		}
 	}
 

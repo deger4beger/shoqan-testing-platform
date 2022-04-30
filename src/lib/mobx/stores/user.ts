@@ -15,8 +15,8 @@ export class UserStore {
 			profile: false
 		},
 		errors: {
-			base: false,
-			profile: false
+			base: false as boolean | string,
+			profile: false as boolean | string
 		}
 	}
 

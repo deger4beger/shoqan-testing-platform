@@ -30,8 +30,8 @@ export class AuthStore {
 			signin: false
 		},
 		errors: {
-			signup: false,
-			signin: false
+			signup: false as boolean | string,
+			signin: false as boolean | string
 		}
 	}
 
@@ -53,7 +53,7 @@ export class AuthStore {
 				email: payload.email
 			})
 		} catch (e: any) {
-			this.states.errors.signup = e
+			this.states.errors.signup = e.response.data.msg
 		} finally {
 			this.states.loading.signup = false
 		}
@@ -70,7 +70,7 @@ export class AuthStore {
 			const { token, ...userData } = response
 			this.setMyData(userData, token)
 		} catch (e: any) {
-			this.states.errors.signin = e
+			this.states.errors.signin = e.response.data.msg
 		} finally {
 			this.states.loading.signin = false
 		}

@@ -29,6 +29,7 @@ const Signup = () => {
 		<>
 			<AuthTemplate
 				title="Регистрация"
+				error={authStore.states.errors.signup}
 				btnContent="Зарегистрироваться"
 				btnLoading={authStore.states.loading.signup}
 				onSubmitForm={onSubmitForm}

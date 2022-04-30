@@ -39,6 +39,7 @@ const Signin = () => {
 		<>
 			<AuthTemplate
 				title="Войти в систему"
+				error={authStore.states.errors.signin}
 				btnContent="Войти"
 				btnLoading={authStore.states.loading.signin}
 				onSubmitForm={onSubmitForm}

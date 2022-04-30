@@ -1,10 +1,11 @@
 import React from 'react'
-import { Heading, Pane, Button, Text, TextInputField, UserIcon } from 'evergreen-ui'
+import { Heading, InlineAlert, Pane, Button, Text, TextInputField, UserIcon } from 'evergreen-ui'
 import { Link } from "react-router-dom"
 
 interface AuthTemplateProps {
 	children: React.ReactNode
 	title: string
+	error?: string | boolean
 	linkToSignup?: boolean
 	btnContent: string
 	btnLoading: boolean
@@ -15,6 +16,7 @@ interface AuthTemplateProps {
 const AuthTemplate: React.FC<AuthTemplateProps> = ({
 	children,
 	title,
+	error,
 	linkToSignup = false,
 	btnContent,
 	btnLoading,
@@ -60,6 +62,11 @@ const AuthTemplate: React.FC<AuthTemplateProps> = ({
 				<Pane>
 					{children}
 				</Pane>
+				{ error && (
+					<InlineAlert intent="danger" paddingBottom={10}>
+						{ error }
+			  	</InlineAlert>
+				)}
 				<Pane marginTop="10px">
 					<Button
 							size="large"
