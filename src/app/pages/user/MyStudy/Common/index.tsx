@@ -11,15 +11,15 @@ const Common = () => {
 		label: el,
 		value: el
 	})))
-  const [value, setValue] = React.useState<Discipline>(Discipline.ONE)
+  const [discipline, setDiscipline] = React.useState<Discipline>(Discipline.ONE)
 
   const { testStore, passingStore } = useStores()
 
   useEffect(() => {
   	testStore.getTestsForDiscipline({
-  		discipline: value
+  		discipline: discipline
   	})
-  }, [value])
+  }, [discipline])
 
   const isLoading = testStore.states.loading.testsForDisc
   const onTestClick = (id: string) => {
@@ -34,8 +34,8 @@ const Common = () => {
 		</Pane>
   	<SegmentedControl
   		options={options}
-  		value={value}
-  		onChange={(value) => setValue(value as any)}
+  		value={discipline}
+  		onChange={(discipline) => setDiscipline(discipline as any)}
   		paddingBottom={16}
   		borderBottom="1px dashed #c1c4d6"
   		disabled={isLoading}

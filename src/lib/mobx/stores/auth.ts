@@ -53,7 +53,7 @@ export class AuthStore {
 				email: payload.email
 			})
 		} catch (e: any) {
-			this.states.errors.signup = e.response.data.msg
+			this.states.errors.signup = e.response.data.detail
 		} finally {
 			this.states.loading.signup = false
 		}
@@ -70,7 +70,7 @@ export class AuthStore {
 			const { token, ...userData } = response
 			this.setMyData(userData, token)
 		} catch (e: any) {
-			this.states.errors.signin = e.response.data.msg
+			this.states.errors.signin = e.response.data.detail
 		} finally {
 			this.states.loading.signin = false
 		}
