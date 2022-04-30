@@ -30,4 +30,5 @@ export interface TestForDiscipline {
 	id: string
 	filename: string
 	passed: null | boolean
+	attempts: null | number
 }

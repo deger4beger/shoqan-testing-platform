@@ -49,6 +49,7 @@ const Common = () => {
 		  			onClick={onTestClick}
 		  			title={test.filename}
 		  			passed={test.passed}
+            attempts={test.attempts}
 		  		/>
 	  		}
 	  	) }

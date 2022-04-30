@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import {
-	ArrowRightIcon, BanCircleIcon, Button,
-	Card,
-	Pane,
+	ArrowRightIcon,
+	BanCircleIcon,
+	Button,
+	Code,
+	Dialog, Heading, Pane,
 	Strong,
 	TickCircleIcon
 } from "evergreen-ui"
@@ -12,14 +14,24 @@ interface TestCardProps {
 	onClick: (id: string) => void
 	title: string
 	passed: null | boolean
+	attempts: null | number
 }
 
 const TestCard: React.FC<TestCardProps> = ({
 	id,
 	onClick,
 	title,
-	passed
+	passed,
+	attempts
 }) => {
+
+	const [isDialogShown, setIsDialogShown] = useState(false)
+
+	const onConfirm = (close) => {
+		onClick(id)
+		close()
+	}
+
 	return (
 		<Button
 				width="100%"
@@ -29,13 +41,27 @@ const TestCard: React.FC<TestCardProps> = ({
 				display="flex"
 				alignItems="center"
 				justifyContent="flex-start"
-				onClick={() => onClick(id)}
-				disabled={passed !== null}
+				onClick={() => setIsDialogShown(true)}
+				disabled={passed !== null || attempts === 3}
 			>
-			{ passed === null && <ArrowRightIcon marginRight={16} /> }
-			{ passed && <TickCircleIcon marginRight={16} /> }
-			{ passed === false && <BanCircleIcon marginRight={16} /> }
-			<Strong>{ title }</Strong>
+			<Pane display="flex" alignItems="center">
+				{ passed === null && <ArrowRightIcon marginRight={16} /> }
+				{ passed === false && <BanCircleIcon marginRight={16} /> }
+				{ passed && <TickCircleIcon marginRight={16} /> }
+				<Strong>{ title }</Strong>
+				<Heading size={200} marginLeft={10}>
+	    		{ `(${!attempts ? 0 : attempts} / 3 попыток)` }
+	  		</Heading>
+			</Pane>
+			<Dialog
+        isShown={isDialogShown}
+        title="Подтверждение"
+        onCloseComplete={() => setIsDialogShown(false)}
+        onConfirm={onConfirm}
+        confirmLabel="Да"
+      >
+				Начать тестирование <Code>{title}</Code> ?
+      </Dialog>
 		</Button>
 	)
 }
