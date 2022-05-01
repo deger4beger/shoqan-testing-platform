@@ -32,3 +32,9 @@ export interface TestForDiscipline {
 	passed: null | boolean
 	attempts: null | number
 }
+
+export interface TestToPass {
+	id: string
+	title: string
+	discipline: string
+}

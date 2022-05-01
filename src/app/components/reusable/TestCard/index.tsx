@@ -11,7 +11,7 @@ import {
 
 interface TestCardProps {
 	id: string
-	onClick: (id: string) => void
+	onClick: (id: string, title: string) => void
 	title: string
 	passed: null | boolean
 	attempts: null | number
@@ -28,7 +28,7 @@ const TestCard: React.FC<TestCardProps> = ({
 	const [isDialogShown, setIsDialogShown] = useState(false)
 
 	const onConfirm = (close) => {
-		onClick(id)
+		onClick(id, title)
 		close()
 	}
 

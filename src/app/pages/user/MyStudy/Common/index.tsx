@@ -22,8 +22,8 @@ const Common = () => {
   }, [discipline])
 
   const isLoading = testStore.states.loading.testsForDisc
-  const onTestClick = (id: string) => {
-  	passingStore.setPassingTest(id)
+  const onTestClick = (id: string, title: string) => {
+  	passingStore.setPassingTest({ id, title, discipline })
   }
 
   return <Pane width="60%" margin="auto">

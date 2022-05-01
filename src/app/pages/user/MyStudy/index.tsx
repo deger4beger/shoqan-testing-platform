@@ -25,7 +25,7 @@ const MyStudy = () => {
 
 	if (!testStore.passed) return <Psychology />
 
-	if (passingStore.testId) return <Verification />
+	if (passingStore.test) return <Verification />
 
 	return <Common />
 

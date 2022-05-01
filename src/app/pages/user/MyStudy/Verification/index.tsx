@@ -87,6 +87,7 @@ const Verification = () => {
 
       const result = await faceapi.euclideanDistance(first!.descriptor, second!.descriptor)
       faceapi.draw.drawFaceLandmarks(photoRef.current!, first!)
+
       setFaceSimilarity(Math.round((1 - result) * 100))
       setIsVerifying(false)
       setIsVerificateDisabled(true)

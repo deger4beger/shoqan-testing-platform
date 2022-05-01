@@ -1,23 +1,24 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
+import { TestToPass } from "../../../types"
 
 export class PassingStore {
 
 	rootStore: RootStore
 
-	testId = null as string | null
+	test = null as TestToPass | null
 
 	constructor (rootStore: RootStore) {
 		this.rootStore = rootStore
 		makeAutoObservable(this)
 	}
 
-	setPassingTest(id: string) {
-		this.testId = id
+	setPassingTest(test: TestToPass) {
+		this.test = test
 	}
 
 	resetData() {
-		this.testId = null
+		this.test = null
 	}
 
 }
