@@ -6,6 +6,7 @@ import Preloader from "../../../components/reusable/Preloader"
 import Psychology from "./Psychology"
 import Common from "./Common"
 import Verification from "./Verification"
+import Testing from "./Testing"
 
 const MyStudy = () => {
 
@@ -24,6 +25,8 @@ const MyStudy = () => {
 	}
 
 	if (!testStore.passed) return <Psychology />
+
+	if (passingStore.allowToPass) return <Testing />
 
 	if (passingStore.test) return <Verification />
 

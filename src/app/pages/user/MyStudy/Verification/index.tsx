@@ -23,8 +23,7 @@ const Verification = () => {
   const [isVerifying, setIsVerifying] = useState(false)
   const [isVerificateDisabled, setIsVerificateDisabled] = useState(false)
 
-
-  const { userStore } = useStores()
+  const { userStore, passingStore } = useStores()
 
   useEffect( () => {
     const loadNets = async () => {
@@ -99,7 +98,7 @@ const Verification = () => {
   }
 
   const startTest = () => {
-    console.log("test started")
+    passingStore.setAllowToPass(true)
   }
 
   return (
