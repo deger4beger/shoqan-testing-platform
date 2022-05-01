@@ -1,5 +1,16 @@
 import React, { useEffect, useRef, useState } from "react"
-import { ArrowRightIcon, ArrowsHorizontalIcon, Button, Heading, InfoSignIcon, Pane, Strong } from "evergreen-ui"
+import {
+  ArrowRightIcon,
+  ArrowsHorizontalIcon,
+  Button,
+  Heading,
+  InfoSignIcon,
+  Pane,
+  Strong
+} from "evergreen-ui"
+import * as faceapi from "face-api.js"
+import { observer } from "mobx-react"
+import { useStores } from "../../../../../lib/mobx"
 
 const Verification = () => {
 
@@ -7,6 +18,9 @@ const Verification = () => {
   const photoRef = useRef<null | HTMLCanvasElement>(null)
 
   const [isPhotoDone, setIsPhotoDone] = useState(false)
+  const [isVerifying, setIsVerifying] = useState(false)
+
+  const { userStore } = useStores()
 
   useEffect( ()=> {
     getVideo()
@@ -39,6 +53,32 @@ const Verification = () => {
     setIsPhotoDone(true)
   }
 
+  const verifyFace = async () => {
+    setIsVerifying(true)
+    await faceapi.loadSsdMobilenetv1Model("/models")
+    await faceapi.loadTinyFaceDetectorModel("/models")
+    await faceapi.loadFaceLandmarkModel("/models")
+    await faceapi.loadFaceRecognitionModel("/models")
+
+    const first = await faceapi
+      .detectSingleFace(photoRef.current!)
+      .withFaceLandmarks()
+      .withFaceDescriptor()
+
+    const img = new Image()
+    img.crossOrigin = "anonymous"
+    img.src = userStore.profile!.photo
+
+    const second = await faceapi
+      .detectSingleFace(img)
+      .withFaceLandmarks()
+      .withFaceDescriptor()
+    const result = await faceapi.euclideanDistance(first!.descriptor, second!.descriptor)
+    faceapi.draw.drawFaceLandmarks(photoRef.current!, first!)
+    console.log(result)
+    setIsVerifying(false)
+  }
+
   return (
     <Pane
       width="56%"
@@ -60,11 +100,31 @@ const Verification = () => {
         <video ref={videoRef}></video>
       </Pane>
       <ArrowRightIcon color="muted" size={30} />
-      <Pane marginLeft={20} border="3px solid #8f95b2" height={414} padding={4} position="relative">
+      <Pane
+          marginX={20}
+          border="3px solid #8f95b2"
+          height={414}
+          padding={4}
+          position="relative"
+        >
         <canvas ref={photoRef}></canvas>
         { !isPhotoDone && (
           <Strong position="absolute" width="100%" left="34%" top="47%">Сделайте фото</Strong>
         ) }
+      </Pane>
+      <ArrowsHorizontalIcon color="muted" size={30} />
+      <Pane
+          border="3px solid #8f95b2"
+          height={414}
+          padding={4}
+          marginLeft={20}
+        >
+        <img
+            src={userStore.profile!.photo}
+            alt="#"
+            width="300px"
+            height="400px"
+          />
       </Pane>
     </Pane>
     <Pane marginTop={40} display="flex" alignItems="center" position="relative" left={10}>
@@ -73,17 +133,19 @@ const Verification = () => {
           appearance="primary"
           size="large"
           marginRight={20}
+          disabled={isVerifying}
         >
         Сделать фото
       </Button>
       <ArrowRightIcon color="muted" size={24} />
       <Button
-          onClick={() => console.log("varif")}
+          onClick={verifyFace}
           appearance="primary"
           size="large"
           intent="success"
           marginLeft={20}
           disabled={!isPhotoDone}
+          isLoading={isVerifying}
         >
         Верифицировать
       </Button>
@@ -92,4 +154,4 @@ const Verification = () => {
   )
 }
 
-export default Verification
+export default observer(Verification)
