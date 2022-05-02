@@ -21,12 +21,18 @@ const Testing = () => {
      		alignItems="center"
       	margin="auto"
       >
-      	<ControlPanel />
-      	<Pane display="flex" flexDirection="column" justifyContent="space-around" height="100%">
+      	<ControlPanel
+      		isTestStarted={isTestStarted}
+	      	setIsTestStarted={setIsTestStarted}
+      	/>
+      	{ isTestStarted && <Pane
+      			display="flex"
+      			flexDirection="column"
+      			justifyContent="space-around"
+      			height="100%"
+      		>
 	      	<Pane marginTop={30} width="100%">
-	      		<Test
-	      			disabled={!isTestStarted}
-	      		/>
+	      		<Test />
 	      	</Pane>
 	      	<Pane marginTop={10} paddingTop={16} marginBottom={30} borderTop="1px dashed #c1c4d6">
 		      	<Pagination
@@ -35,7 +41,7 @@ const Testing = () => {
 		      		setSelectedPage={(page) => setSelectedPage(page)}
 		      	/>
 	      	</Pane>
-      	</Pane>
+      	</Pane> }
 		</Pane>
 	)
 }

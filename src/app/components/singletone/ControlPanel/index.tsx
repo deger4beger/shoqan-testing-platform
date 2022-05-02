@@ -3,10 +3,23 @@ import { observer } from "mobx-react"
 import * as faceapi from "face-api.js"
 import { Button, Heading, Pane, Strong } from "evergreen-ui"
 
-const ControlPanel = () => {
+interface ControlPanelProps {
+  isTestStarted: boolean
+  setIsTestStarted: (boolean) => void
+}
+
+const ControlPanel: React.FC<ControlPanelProps> = ({
+  isTestStarted,
+  setIsTestStarted
+}) => {
+
+  const onStartTest = () => {
+    setIsTestStarted(true)
+  }
 
   const videoRef = useRef<null | HTMLVideoElement>(null)
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
+  const msWithoutCamera = useRef(0)
   const [isModelLoading, setIsModelLoading] = useState(false)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
 
@@ -34,6 +47,8 @@ const ControlPanel = () => {
   }
 
   const runProctoring = async () => {
+    const msToRecalculate = 100
+
     !isProctoringStarted && setIsProctoringStarted(true)
     const mtcnnForwardParams = {
       minFaceSize: 80,
@@ -46,9 +61,21 @@ const ControlPanel = () => {
     canvasRef.current!.getContext('2d')!.clearRect(0, 0, 320, 180)
 
     faceapi.draw.drawDetections(canvasRef.current!, mtcnnResults)
+
+    if (mtcnnResults.length === 0) {
+      msWithoutCamera.current += msToRecalculate
+    }
+    if (mtcnnResults.length !== 0) {
+      msWithoutCamera.current = 0
+    }
+
+    if (msWithoutCamera.current === 5000 && isTestStarted) {
+      console.log("Test failed")
+    }
+
     setTimeout(() => {
       runProctoring()
-    }, 100)
+    }, msToRecalculate)
   }
 
   return (
@@ -113,7 +140,7 @@ const ControlPanel = () => {
             Начать прокторинг
           </Button>
           <Button
-              // onClick={startTest}
+              onClick={onStartTest}
               size="medium"
               intent="none"
               disabled={isModelLoading || !isProctoringStarted}
