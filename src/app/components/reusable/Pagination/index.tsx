@@ -5,10 +5,14 @@ interface PaginationProps {
 	pages: number[]
 	selectedPage: number
 	setSelectedPage: (number) => void
+	selectedList: any[]
 }
 
 const Pagination: React.FC<PaginationProps> = ({
-	pages, selectedPage, setSelectedPage
+	pages,
+	selectedPage,
+	setSelectedPage,
+	selectedList
 }) => {
 	return (
 		<Tablist display="flex">
@@ -25,8 +29,11 @@ const Pagination: React.FC<PaginationProps> = ({
 	          width={35}
 	          display="flex"
 	          justifyContent="center"
+	          appearance="primary"
 	        >
-	          <Strong>{ tab }</Strong>
+	          <Strong color={selectedList[index] ? "selected" : null}>
+	          	{ tab }
+	          </Strong>
 	        </Tab>
 	      ))}
 	  </Tablist>

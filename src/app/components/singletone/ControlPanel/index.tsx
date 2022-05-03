@@ -2,20 +2,25 @@ import React, { useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react"
 import * as faceapi from "face-api.js"
 import { Button, Heading, Pane, Strong } from "evergreen-ui"
+import Timer from "../../reusable/Timer"
 
 interface ControlPanelProps {
   isTestStarted: boolean
-  setIsTestStarted: (boolean) => void
+  isAbleToEnd: boolean
+  isTestLoading: boolean
+  secondsLeft: number
+  onStartTest: () => void
+  onFinishTest: () => void
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
   isTestStarted,
-  setIsTestStarted
+  isTestLoading,
+  onStartTest,
+  onFinishTest,
+  secondsLeft,
+  isAbleToEnd
 }) => {
-
-  const onStartTest = () => {
-    setIsTestStarted(true)
-  }
 
   const videoRef = useRef<null | HTMLVideoElement>(null)
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
@@ -85,13 +90,28 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       display="flex"
       height="198px"
     >
+      <Pane display="flex" alignItems="flex-end">
+        <Pane
+            height={34}
+            display="flex"
+            alignItems="center"
+            paddingX={10}
+            width="70px"
+            border="3px solid #c1c4d6"
+            borderBottom={false}
+            borderLeft={false}
+            borderTopRightRadius={6}
+          >
+          <Timer secondsLeft={secondsLeft} />
+        </Pane>
+      </Pane>
       <Pane
           height="100%"
           border="3px solid #c1c4d6"
           padding={6}
           position="relative"
           borderBottom={false}
-          marginLeft={26}
+          marginLeft={16}
           borderTopLeftRadius={6}
           borderTopRightRadius={6}
         >
@@ -127,6 +147,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             borderTopLeftRadius={6}
             borderTopRightRadius={6}
             marginLeft={6}
+            paddingRight={16}
           >
           <Button
               onClick={runProctoring}
@@ -136,6 +157,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               isLoading={false}
               margin={6}
               marginRight={12}
+              width="100%"
             >
             Начать прокторинг
           </Button>
@@ -143,20 +165,22 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               onClick={onStartTest}
               size="medium"
               intent="none"
-              disabled={isModelLoading || !isProctoringStarted}
-              isLoading={false}
+              disabled={isModelLoading || !isProctoringStarted || isTestStarted}
+              isLoading={isTestLoading}
               margin={6}
               marginRight={12}
+              width="100%"
             >
             Начать тестирование
           </Button>
           <Button
-              // onClick={startTest}
+              onClick={onFinishTest}
               size="medium"
               intent="none"
-              disabled={isModelLoading}
+              disabled={isModelLoading || !isAbleToEnd}
               isLoading={false}
               margin={6}
+              width="100%"
             >
             Закончить тестирование
           </Button>

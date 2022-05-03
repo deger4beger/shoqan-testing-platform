@@ -2,26 +2,31 @@ import React, { useRef } from "react"
 import { Heading, Pane, Strong, Tab, Tablist, Text } from "evergreen-ui"
 
 interface TestProps {
-
+  question: string
+  answers: string[]
+  selectedAnswerIndex: number
+  setSelectedAnswer: (index: number) => void
 }
 
-const Test: React.FC<TestProps> = () => {
-
-  const [selectedIndex, setSelectedIndex] = React.useState(-1)
-  const [tabs] = React.useState(["300 тенге", "400 тенге", "350 тенге", "800 рублей", "1 гривна"])
+const Test: React.FC<TestProps> = ({
+  question,
+  answers,
+  setSelectedAnswer,
+  selectedAnswerIndex
+}) => {
 
   return (
     <Pane width="100%">
       <Heading size={600}>
-        Сколько стоит мороженное в отмороженном магазине ?
+        { question }
       </Heading>
       <Tablist marginBottom={16} flexBasis={240} marginRight={24}>
-        {tabs.map((tab, index) => (
+        {answers.map((tab, index) => (
           <Tab
             key={tab}
             id={tab}
-            onSelect={() => setSelectedIndex(index)}
-            isSelected={index === selectedIndex}
+            onSelect={() => setSelectedAnswer(index)}
+            isSelected={index === selectedAnswerIndex}
             aria-controls={`panel-${tab}`}
             direction="vertical"
             marginLeft={16}

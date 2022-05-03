@@ -5,13 +5,42 @@ import { Pane } from "evergreen-ui"
 import ControlPanel from "../../../../components/singletone/ControlPanel"
 import Test from "../../../../components/reusable/Test"
 import Pagination from "../../../../components/reusable/Pagination"
+import useTimer from "../../../../hooks/useTimer"
 
 const Testing = () => {
 
-	const [selectedPage, setSelectedPage] = React.useState(1)
-	const [isTestStarted, setIsTestStarted] = useState(false)
-  const [pages] = React.useState(Array.from({length: 30}, (_, i) => i + 1))
 	const { passingStore } = useStores()
+
+  const [pages] = useState(Array.from({length: 30}, (_, i) => i + 1))
+	const [selectedPage, setSelectedPage] = useState(1)
+
+  const [answers, setAnswers] = useState<string[]>([])
+  const [currentAnswers, setCurrentAnswers] = useState<string[]>([])
+
+	const [isTestStarted, setIsTestStarted] = useState(false)
+  const { secondsLeft, setTimerStarted } = useTimer(1800)
+
+	const onStartTest = async () => {
+		await passingStore.getTestToPass()
+		setCurrentAnswers(passingStore.testToPass![0].answers)
+    setIsTestStarted(true)
+    setTimerStarted(true)
+  }
+
+  const onPageChange = (page: number) => {
+  	setSelectedPage(page)
+  	setCurrentAnswers(passingStore.testToPass![page - 1].answers)
+  }
+
+  const onAnswerSelect = (index: number) => {
+  	const copyAnswers = [...answers]
+  	copyAnswers[selectedPage - 1] = passingStore.testToPass![selectedPage - 1].answers[index]
+  	setAnswers(copyAnswers)
+  }
+
+  const onFinishTest = () => {
+  	console.log(answers)
+  }
 
 	return (
 		<Pane
@@ -22,8 +51,12 @@ const Testing = () => {
       	margin="auto"
       >
       	<ControlPanel
+	      	isAbleToEnd={answers.length === 30}
       		isTestStarted={isTestStarted}
-	      	setIsTestStarted={setIsTestStarted}
+	      	onStartTest={onStartTest}
+	      	onFinishTest={onFinishTest}
+	      	secondsLeft={secondsLeft}
+	      	isTestLoading={passingStore.states.loading.getTest}
       	/>
       	{ isTestStarted && <Pane
       			display="flex"
@@ -32,13 +65,19 @@ const Testing = () => {
       			height="100%"
       		>
 	      	<Pane marginTop={30} width="100%">
-	      		<Test />
+	      		<Test
+	      			question={passingStore.testToPass![selectedPage - 1].question}
+  						answers={passingStore.testToPass![selectedPage - 1].answers}
+  						setSelectedAnswer={onAnswerSelect}
+  						selectedAnswerIndex={passingStore.testToPass![selectedPage - 1].answers.indexOf(answers[selectedPage - 1])}
+	      		/>
 	      	</Pane>
 	      	<Pane marginTop={10} paddingTop={16} marginBottom={30} borderTop="1px dashed #c1c4d6">
 		      	<Pagination
 		      		pages={pages}
+		      		selectedList={answers}
 		      		selectedPage={selectedPage}
-		      		setSelectedPage={(page) => setSelectedPage(page)}
+		      		setSelectedPage={(page) => onPageChange(page)}
 		      	/>
 	      	</Pane>
       	</Pane> }
