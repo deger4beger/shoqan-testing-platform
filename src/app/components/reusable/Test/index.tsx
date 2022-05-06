@@ -3,7 +3,8 @@ import { Heading, Pane, Strong, Tab, Tablist, Text } from "evergreen-ui"
 
 interface TestProps {
   question: string
-  answers: string[]
+  answers: string[],
+  questionNumber: number,
   selectedAnswerIndex: number
   setSelectedAnswer: (index: number) => void
 }
@@ -12,13 +13,14 @@ const Test: React.FC<TestProps> = ({
   question,
   answers,
   setSelectedAnswer,
-  selectedAnswerIndex
+  selectedAnswerIndex,
+  questionNumber
 }) => {
 
   return (
     <Pane width="100%">
       <Heading size={600}>
-        { question }
+        { questionNumber }) { question }
       </Heading>
       <Tablist marginBottom={16} flexBasis={240} marginRight={24}>
         {answers.map((tab, index) => (

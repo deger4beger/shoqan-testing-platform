@@ -3,6 +3,7 @@ import { observer } from "mobx-react"
 import * as faceapi from "face-api.js"
 import { Button, Heading, Pane, Strong } from "evergreen-ui"
 import Timer from "../../reusable/Timer"
+import { notify } from "../../../helpers"
 
 interface ControlPanelProps {
   isTestStarted: boolean
@@ -24,6 +25,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
 
   const videoRef = useRef<null | HTMLVideoElement>(null)
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
+  const intervalRef = useRef<null | NodeJS.Timer>(null)
   const msWithoutCamera = useRef(0)
   const [isModelLoading, setIsModelLoading] = useState(false)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
@@ -36,7 +38,22 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     }
     loadModel()
     getVideo()
+    return () => {
+      clearTimeout(intervalRef.current!)
+    }
   }, [])
+
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      clearTimeout(intervalRef.current!)
+      notify(
+        "Тест закончен, время истекло",
+        "notify",
+        5,
+        "Ошибка"
+      )
+    }
+  }, [secondsLeft])
 
   const getVideo = () => {
     window.navigator.mediaDevices.getUserMedia({
@@ -74,11 +91,17 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       msWithoutCamera.current = 0
     }
 
-    if (msWithoutCamera.current === 5000 && isTestStarted) {
-      console.log("Test failed")
+    if (msWithoutCamera.current === 7000) {
+      clearTimeout(intervalRef.current!)
+      notify(
+        "Вы завалили тест, не появлявшись на камере",
+        "danger",
+        5,
+        "Ошибка"
+      )
     }
 
-    setTimeout(() => {
+    intervalRef.current = setTimeout(() => {
       runProctoring()
     }, msToRecalculate)
   }
@@ -138,7 +161,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
           alignItems="flex-end"
           justifyContent="flex-end"
           marginRight={26}
-          flexWrap="wrap"
         >
         <Pane
             border="3px solid #c1c4d6"
@@ -147,7 +169,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             borderTopLeftRadius={6}
             borderTopRightRadius={6}
             marginLeft={6}
-            paddingRight={16}
+            display="flex"
+            flexWrap="wrap"
           >
           <Button
               onClick={runProctoring}
@@ -157,7 +180,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               isLoading={false}
               margin={6}
               marginRight={12}
-              width="100%"
+              flexGrow={1}
+              // width="100%"
             >
             Начать прокторинг
           </Button>
@@ -169,7 +193,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               isLoading={isTestLoading}
               margin={6}
               marginRight={12}
-              width="100%"
+              flexGrow={1}
+              // width="100%"
             >
             Начать тестирование
           </Button>
@@ -180,7 +205,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               disabled={isModelLoading || !isAbleToEnd}
               isLoading={false}
               margin={6}
-              width="100%"
+              flexGrow={1}
+              // width="100%"
             >
             Закончить тестирование
           </Button>

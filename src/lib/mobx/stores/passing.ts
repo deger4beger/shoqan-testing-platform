@@ -48,7 +48,6 @@ export class PassingStore {
 			this.states.errors.getTest = false
 
 			this.testToPass = data
-			console.log(data)
 
 		} catch (e: any) {
 			this.states.errors.getTest = e

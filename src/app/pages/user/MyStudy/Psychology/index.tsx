@@ -4,7 +4,7 @@ import { Button, Heading, InfoSignIcon, Pane } from "evergreen-ui"
 import { Question } from "../../../../../types"
 import QuestionComponent from "../../../../components/reusable/Question"
 import { useStores } from "../../../../../lib/mobx"
-import { notify } from "../../../helpers"
+import { notify } from "../../../../helpers"
 
 const Psychology: React.FC = () => {
 

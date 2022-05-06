@@ -14,7 +14,7 @@ const Testing = () => {
   const [pages] = useState(Array.from({length: 30}, (_, i) => i + 1))
 	const [selectedPage, setSelectedPage] = useState(1)
 
-  const [answers, setAnswers] = useState<string[]>([])
+  const [answers, setAnswers] = useState<string[]>(new Array(30).fill(null))
   const [currentAnswers, setCurrentAnswers] = useState<string[]>([])
 
 	const [isTestStarted, setIsTestStarted] = useState(false)
@@ -51,7 +51,7 @@ const Testing = () => {
       	margin="auto"
       >
       	<ControlPanel
-	      	isAbleToEnd={answers.length === 30}
+	      	isAbleToEnd={answers.every(el => !!el) && answers.length === 30}
       		isTestStarted={isTestStarted}
 	      	onStartTest={onStartTest}
 	      	onFinishTest={onFinishTest}
@@ -66,6 +66,7 @@ const Testing = () => {
       		>
 	      	<Pane marginTop={30} width="100%">
 	      		<Test
+	      			questionNumber={selectedPage}
 	      			question={passingStore.testToPass![selectedPage - 1].question}
   						answers={passingStore.testToPass![selectedPage - 1].answers}
   						setSelectedAnswer={onAnswerSelect}

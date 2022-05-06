@@ -11,7 +11,7 @@ import { observer } from "mobx-react"
 import DocxUploader from "../../../components/singletone/DocxUploader"
 import MultipleSelect from "../../../components/reusable/MultipleSelect"
 import { useStores } from "../../../../lib/mobx"
-import { notify } from "../../helpers"
+import { notify } from "../../../helpers"
 import { Competence, Discipline } from "../../../../types"
 
 const UploadTests = () => {
