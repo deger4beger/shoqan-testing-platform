@@ -38,3 +38,12 @@ export interface TestToPass {
 	title: string
 	discipline: string
 }
+
+export interface PassTestPayload {
+	answers: string[]
+}
+
+export interface PassTestReponse {
+	score: number
+	passed: boolean
+}
