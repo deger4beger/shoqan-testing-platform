@@ -7,6 +7,7 @@ import Psychology from "./Psychology"
 import Common from "./Common"
 import Verification from "./Verification"
 import Testing from "./Testing"
+import PassedInfo from "./PassedInfo"
 
 const MyStudy = () => {
 
@@ -25,6 +26,8 @@ const MyStudy = () => {
 	}
 
 	if (!testStore.passed) return <Psychology />
+
+	if (passingStore.passedInfo) return <PassedInfo />
 
 	if (passingStore.allowToPass) return <Testing />
 

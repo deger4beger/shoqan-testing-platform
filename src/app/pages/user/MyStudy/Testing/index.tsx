@@ -39,7 +39,7 @@ const Testing = () => {
   }
 
   const onFinishTest = () => {
-  	console.log(answers)
+    passingStore.passTest({ answers })
   }
 
 	return (
@@ -57,6 +57,7 @@ const Testing = () => {
 	      	onFinishTest={onFinishTest}
 	      	secondsLeft={secondsLeft}
 	      	isTestLoading={passingStore.states.loading.getTest}
+          isPassTestLoading={passingStore.states.loading.passTest}
       	/>
       	{ isTestStarted && <Pane
       			display="flex"

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
-import { observer } from "mobx-react"
 import * as faceapi from "face-api.js"
-import { Button, Heading, Pane, Strong } from "evergreen-ui"
 import Timer from "../../reusable/Timer"
+import { Button, Heading, Pane, Strong } from "evergreen-ui"
 import { notify } from "../../../helpers"
 
 interface ControlPanelProps {
   isTestStarted: boolean
   isAbleToEnd: boolean
   isTestLoading: boolean
+  isPassTestLoading: boolean
   secondsLeft: number
   onStartTest: () => void
   onFinishTest: () => void
@@ -20,7 +20,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onStartTest,
   onFinishTest,
   secondsLeft,
-  isAbleToEnd
+  isAbleToEnd,
+  isPassTestLoading
 }) => {
 
   const videoRef = useRef<null | HTMLVideoElement>(null)
@@ -45,13 +46,13 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
 
   useEffect(() => {
     if (secondsLeft === 0) {
-      clearTimeout(intervalRef.current!)
       notify(
         "Тест закончен, время истекло",
         "notify",
         5,
-        "Ошибка"
+        "Внимание"
       )
+      onFinishTest()
     }
   }, [secondsLeft])
 
@@ -65,6 +66,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       let video = videoRef.current
       video!.srcObject = stream
       video!.play()
+
+      canvasRef.current!.width = 320
+      canvasRef.current!.height = 180
     })
   }
 
@@ -91,14 +95,14 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       msWithoutCamera.current = 0
     }
 
-    if (msWithoutCamera.current === 7000) {
-      clearTimeout(intervalRef.current!)
+    if (msWithoutCamera.current === 6000) {
       notify(
         "Вы завалили тест, не появлявшись на камере",
         "danger",
         5,
         "Ошибка"
       )
+      onFinishTest()
     }
 
     intervalRef.current = setTimeout(() => {
@@ -203,7 +207,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               size="medium"
               intent="none"
               disabled={isModelLoading || !isAbleToEnd}
-              isLoading={false}
+              isLoading={isPassTestLoading}
               margin={6}
               flexGrow={1}
               // width="100%"

@@ -1,6 +1,6 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
-import { PassTestPayload, Question, TestToPass } from "../../../types"
+import { PassTestPayload, PassTestReponse, Question, TestToPass } from "../../../types"
 import { testApi } from "../../api/protected"
 
 export class PassingStore {
@@ -9,6 +9,7 @@ export class PassingStore {
 
 	test = null as TestToPass | null
 	testToPass = null as Question[] | null
+	passedInfo = null as PassTestReponse | null
 	allowToPass = false
 
 	states = {
@@ -40,6 +41,12 @@ export class PassingStore {
 		this.allowToPass = false
 	}
 
+	resetAllData() {
+		this.passedInfo = null
+		this.testToPass = null
+		this.resetData()
+	}
+
 	getTestToPass = flow(function* (
 		this: PassingStore
 	) {
@@ -68,7 +75,7 @@ export class PassingStore {
 			const data = yield testApi.passTestByTestId(this.test!.id, payload)
 			this.states.errors.passTest = false
 
-
+			this.passedInfo = data
 
 		} catch (e: any) {
 			this.states.errors.passTest = e
