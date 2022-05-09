@@ -106,7 +106,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
         <Pane marginTop={6}>
         	<Strong>
         		• Результат:
-        	</Strong> {selectedCertificateData?.score}
+        	</Strong> {selectedCertificateData?.score} / 30
         </Pane>
       </Dialog>
 		</Pane>

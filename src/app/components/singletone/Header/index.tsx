@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ isAdmin, userIdentifier, isProfileFille
 
     const currentRouteNames = isAdmin ? adminRouteNames : userRouteNames
     const currentRoutes = isAdmin ? adminRoutes : userRoutes
-    const defaultUrlIndex = isAdmin ? adminRoutes.indexOf("/certificates") : currentRoutes.length
+    const defaultUrlIndex = isAdmin ? adminRoutes.indexOf("/upload") : currentRoutes.length
     return {
       currentRoutes,
       currentRouteNames,
