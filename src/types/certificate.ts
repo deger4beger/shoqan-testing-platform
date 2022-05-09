@@ -6,3 +6,7 @@ export interface Certificate {
 	passDate: string
 	discipline: string
 }
+
+export interface GetCertificatesParams {
+	all: 0 | 1
+}

@@ -18,7 +18,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
 	const [selectedCertificateData, setSelectedCertificateData] = useState<null | Certificate>(null)
 	const [filter, setFilter] = useState<string>("")
 
-	const dialogTitle = `Сертификат №${selectedCertificateData?.id}`
+	const dialogTitle = `Сертификат № ${selectedCertificateData?.id}`
 
 	const onCertificateClick = (certificate) => {
 		setSelectedCertificateData(certificate)
@@ -42,29 +42,35 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
 					{title}
 				</Heading>
 			</Pane>
-			<Table width="100%">
-			  <Table.Head>
-			    { isSearchShown ? <Table.SearchHeaderCell
-			    			placeholder="Поиск"
-			    			value={filter}
-			    			onChange={onFilterChange}
-			    		/> :
-			    	<Table.TextHeaderCell>Имя прошедшего</Table.TextHeaderCell> }
-			    <Table.TextHeaderCell>Название теста</Table.TextHeaderCell>
-			    <Table.TextHeaderCell>Количество баллов <Heading size={100} display="inline-block">
-			    	(Максимум: 30)
-			   	</Heading></Table.TextHeaderCell>
-			  </Table.Head>
-			  <Table.VirtualBody height={610}>
-			    {certificates.filter(el => el.fullName.toLowerCase().includes(filter)).map((certificate) => (
-			      <Table.Row key={certificate.id} isSelectable onSelect={() => onCertificateClick(certificate)}>
-			        <Table.TextCell>{certificate.fullName}</Table.TextCell>
-			        <Table.TextCell>{certificate.testName}</Table.TextCell>
-			        <Table.TextCell isNumber>{certificate.score}</Table.TextCell>
-			      </Table.Row>
-			    ))}
-			  </Table.VirtualBody>
-			</Table>
+			{ certificates.length ? (
+				<Table width="100%">
+				  <Table.Head>
+				    { isSearchShown ? <Table.SearchHeaderCell
+				    			placeholder="Поиск"
+				    			value={filter}
+				    			onChange={onFilterChange}
+				    		/> :
+				    	<Table.TextHeaderCell>Имя прошедшего</Table.TextHeaderCell> }
+				    <Table.TextHeaderCell>Название теста</Table.TextHeaderCell>
+				    <Table.TextHeaderCell>Количество баллов <Heading size={100} display="inline-block">
+				    	(Максимум: 30)
+				   	</Heading></Table.TextHeaderCell>
+				  </Table.Head>
+				  <Table.VirtualBody height={610}>
+				    {certificates.filter(el => el.fullName.toLowerCase().includes(filter)).map((certificate) => (
+				      <Table.Row key={certificate.id} isSelectable onSelect={() => onCertificateClick(certificate)}>
+				        <Table.TextCell>{certificate.fullName}</Table.TextCell>
+				        <Table.TextCell>{certificate.testName}</Table.TextCell>
+				        <Table.TextCell isNumber>{certificate.score}</Table.TextCell>
+				      </Table.Row>
+				    ))}
+				  </Table.VirtualBody>
+				</Table>
+				) : (
+					<Heading size={500} marginTop={60}>
+						Сертификатов нет
+					</Heading>
+				) }
 			<Dialog
         isShown={isDialogShown}
         title={dialogTitle}

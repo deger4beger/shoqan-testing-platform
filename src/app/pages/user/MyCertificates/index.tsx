@@ -1,67 +1,34 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Certificate } from "../../../../types"
 import CertificatesTable from "../../../components/templates/CertificatesTable"
 import { withProfile } from "../../../hocs/withProfile"
+import { observer } from "mobx-react"
+import { useStores } from "../../../../lib/mobx"
+import Preloader from "../../../components/reusable/Preloader"
 
 const MyCertificates = () => {
 
-	const certificates: Certificate[] = [
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-		},
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле"
-		},
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле"
-		},
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле"
-		},
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле"
-		},
-		{
-			id: "1",
-			fullName: "Богдан",
-			testName: "Тестирование по ...",
-			score: 32,
-			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле"
+	const { certificateStore } = useStores()
+
+	useEffect(() => {
+		certificateStore.getCertificates({
+			all: 0
+		})
+		return () => {
+			certificateStore.resetAllData()
 		}
-	]
+	}, [])
+
+	if (!certificateStore.certificates) {
+		return <Preloader />
+	}
 
 	return <CertificatesTable
 		title="Список моих сертификатов"
-		certificates={certificates}
+		certificates={certificateStore.certificates}
 		isSearchShown={false}
 	/>
 }
 
-export default withProfile(MyCertificates)
+export default withProfile(observer(MyCertificates))
