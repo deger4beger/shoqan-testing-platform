@@ -1,7 +1,7 @@
 import axios from "axios"
 
 import { protectedInterceptor } from "./index.interceptors"
-import { Answers, GetCertificatesParams, PassTestPayload, PassTestReponse, Question, StressData, TestForDiscipline, TestForDisciplineParams, UserProfile } from "../../../types"
+import { Answers, CompetenceResponse, GetCertificatesParams, PassTestPayload, PassTestReponse, Question, StressData, TestForDiscipline, TestForDisciplineParams, UserProfile } from "../../../types"
 
 const instance = axios.create({
     baseURL: "http://localhost:8000" // https://shoqan-platform.herokuapp.com
@@ -17,7 +17,11 @@ export const userApi = {
   sendProfile(payload: any): Promise<UserProfile> {
     return instance.post<UserProfile>("user/profile/", payload)
       .then(res => res.data)
-  }
+  },
+  getCompetence(): Promise<CompetenceResponse> {
+		return instance.get<CompetenceResponse>("competence/")
+      .then(res => res.data)
+	},
 }
 
 export const testApi = {

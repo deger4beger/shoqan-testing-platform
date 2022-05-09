@@ -1,6 +1,6 @@
 import { makeAutoObservable, flow } from "mobx"
 import { RootStore } from ".."
-import { UserProfile, UserProfilePayload } from "../../../types"
+import { Competence, UserProfile, UserProfilePayload } from "../../../types"
 import { userApi } from "../../api/protected"
 
 export class UserStore {
@@ -8,15 +8,18 @@ export class UserStore {
 	rootStore: RootStore
 
 	profile = null as null | UserProfile
+	competencies = null as null | Competence[]
 	isInitialized = false
 	states = {
 		loading: {
 			base: false,
-			profile: false
+			profile: false,
+			competence: false
 		},
 		errors: {
 			base: false as boolean | string,
-			profile: false as boolean | string
+			profile: false as boolean | string,
+			competence: false as boolean | string
 		}
 	}
 
@@ -60,12 +63,28 @@ export class UserStore {
 			this.states.errors.base = false
 			if (response) {
 				this.setUserProfile(response)
+				this.getCompetencies()
 			}
 			this.isInitialized = true
 		} catch (e: any) {
 			this.states.errors.base = e
 		} finally {
 			this.states.loading.base = false
+		}
+	})
+
+	getCompetencies = flow(function* (
+		this: UserStore
+	) {
+		this.states.loading.competence = true
+		try {
+			const response = yield userApi.getCompetence()
+			this.states.errors.competence = false
+			this.competencies = response.competencies
+		} catch (e: any) {
+			this.states.errors.competence = e
+		} finally {
+			this.states.loading.competence = false
 		}
 	})
 

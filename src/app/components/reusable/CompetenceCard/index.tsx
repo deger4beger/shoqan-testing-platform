@@ -1,7 +1,13 @@
 import React from "react"
 import { Pane } from "evergreen-ui"
 
-const CompetenceCard = () => {
+interface CompetenceCardProps {
+	title: string
+}
+
+const CompetenceCard: React.FC<CompetenceCardProps> = ({
+	title
+}) => {
 	return (
 		<Pane
 				background="gray100"
@@ -12,7 +18,7 @@ const CompetenceCard = () => {
 				marginX={10}
 				width={360}
 			>
-			Компетенция
+			{ title }
 		</Pane>
 	)
 }

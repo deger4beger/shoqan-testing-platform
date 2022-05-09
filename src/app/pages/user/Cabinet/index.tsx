@@ -172,11 +172,25 @@ const UserCabinet = () => {
 		    		justifyContent="center"
 		    		marginTop={30}
 						borderTop={true}
-						paddingTop={20}
+						paddingTop={30}
 					>
-		    	{[...Array(10)].map((el, index) =>
-		    		<CompetenceCard key={index} />
-		    	)}
+		    	{userStore.competencies ? (
+		    		<Pane width="100%">
+		    			<Heading size={600} borderBottom="1px solid #c1c4d6" paddingBottom={6} textAlign="center">
+		      			Список приобретенных вами компетенций
+		      		</Heading>
+		      		<Pane width="100%" display="flex" flexWrap="wrap" marginTop={20}>
+				    		{ userStore.competencies.map(el =>
+				    			<CompetenceCard
+				    				key={el}
+				    				title={el}
+				    			/>
+				    		) }
+			    		</Pane>
+		    		</Pane>
+		    	) : (
+		    		<Preloader />
+		    	)	}
 		    </Pane>
       </Pane>
     </>
