@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, Heading, Pane, Table } from "evergreen-ui"
+import { Dialog, Heading, Pane, Strong, Table } from "evergreen-ui"
 import { Certificate } from "../../../../types"
 
 interface CertificatesTableProps {
@@ -52,7 +52,7 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
 			    	<Table.TextHeaderCell>Имя прошедшего</Table.TextHeaderCell> }
 			    <Table.TextHeaderCell>Название теста</Table.TextHeaderCell>
 			    <Table.TextHeaderCell>Количество баллов <Heading size={100} display="inline-block">
-			    	(Максимум: 100)
+			    	(Максимум: 30)
 			   	</Heading></Table.TextHeaderCell>
 			  </Table.Head>
 			  <Table.VirtualBody height={610}>
@@ -73,18 +73,35 @@ const CertificatesTable: React.FC<CertificatesTableProps> = ({
         cancelLabel="Закрыть"
       >
       	<Pane>
-        	Идентификатор: {selectedCertificateData?.id}
+        	<Strong>
+        		• Идентификатор:
+        	</Strong> {selectedCertificateData?.id}
         </Pane>
-        <Pane>
-        	Имя прошедшего: {selectedCertificateData?.fullName}
+        <Pane marginTop={6}>
+        	<Strong>
+        		• Имя прошедшего:
+        	</Strong> {selectedCertificateData?.fullName}
         </Pane>
-        <Pane>
-        	Название тестирования: {selectedCertificateData?.testName}
+        <Pane marginTop={6}>
+        	<Strong>
+        		• Название тестирования:
+        	</Strong> {selectedCertificateData?.testName}
         </Pane>
-        <Pane>
-        	Результат: {selectedCertificateData?.score}
+        <Pane marginTop={6}>
+        	<Strong>
+        		• Дисциплина:
+        	</Strong> {selectedCertificateData?.discipline}
         </Pane>
-        И т.д
+        <Pane marginTop={6}>
+        	<Strong>
+        		• Дата прохождения:
+        	</Strong> {selectedCertificateData?.passDate}
+        </Pane>
+        <Pane marginTop={6}>
+        	<Strong>
+        		• Результат:
+        	</Strong> {selectedCertificateData?.score}
+        </Pane>
       </Dialog>
 		</Pane>
 	)

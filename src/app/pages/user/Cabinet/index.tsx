@@ -8,6 +8,7 @@ import { useStores } from "../../../../lib/mobx"
 import { observer } from "mobx-react"
 import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
 import Preloader from "../../../components/reusable/Preloader"
+import CompetenceCard from "../../../components/reusable/CompetenceCard"
 
 const UserCabinet = () => {
 
@@ -92,7 +93,8 @@ const UserCabinet = () => {
   return (
     <>
       <Pane
-        width="100%"
+        width="60%"
+        margin="auto"
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -162,6 +164,19 @@ const UserCabinet = () => {
 		      </> ) : (
 		      	<UserProfileFilled profile={userStore.profile as any} />
 		      )}
+		    </Pane>
+		    <Pane
+		    		width="100%"
+		    		display="flex"
+		    		flexWrap="wrap"
+		    		justifyContent="center"
+		    		marginTop={30}
+						borderTop={true}
+						paddingTop={20}
+					>
+		    	{[...Array(10)].map((el, index) =>
+		    		<CompetenceCard key={index} />
+		    	)}
 		    </Pane>
       </Pane>
     </>

@@ -5,5 +5,4 @@ export interface Certificate {
 	score: number
 	passDate: string
 	discipline: string
-	competence: string
 }

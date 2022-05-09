@@ -12,8 +12,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		},
 		{
 			id: "1",
@@ -21,8 +20,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		},
 		{
 			id: "1",
@@ -30,8 +28,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		},
 		{
 			id: "1",
@@ -39,8 +36,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		},
 		{
 			id: "1",
@@ -48,8 +44,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		},
 		{
 			id: "1",
@@ -57,8 +52,7 @@ const AllCertificates = () => {
 			testName: "Тестирование по ...",
 			score: 32,
 			passDate: "2022/13/04 13.22",
-			discipline: "ИТ в Горном деле",
-			competence: "3NBLH80H"
+			discipline: "ИТ в Горном деле"
 		}
 	]
 
