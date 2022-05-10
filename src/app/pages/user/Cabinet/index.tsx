@@ -174,7 +174,7 @@ const UserCabinet = () => {
 						borderTop={true}
 						paddingTop={30}
 					>
-		    	{userStore.competencies ? (
+		    	{userStore.competencies?.length ? (
 		    		<Pane width="100%">
 		    			<Heading size={600} borderBottom="1px solid #c1c4d6" paddingBottom={6} textAlign="center">
 		      			Список приобретенных вами компетенций
@@ -189,7 +189,7 @@ const UserCabinet = () => {
 			    		</Pane>
 		    		</Pane>
 		    	) : (
-		    		<Preloader />
+		    		!userStore.competencies && <Preloader />
 		    	)	}
 		    </Pane>
       </Pane>
