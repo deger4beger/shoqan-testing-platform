@@ -189,7 +189,7 @@ const UserCabinet = () => {
 			    		</Pane>
 		    		</Pane>
 		    	) : (
-		    		!userStore.competencies && <Preloader />
+		    		userStore.states.loading.competence && <Preloader />
 		    	)	}
 		    </Pane>
       </Pane>

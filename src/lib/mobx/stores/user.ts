@@ -95,6 +95,7 @@ export class UserStore {
 
 	cleanData() {
 		this.isInitialized = false
+		this.competencies = null
 	}
 
 }
