@@ -43,11 +43,11 @@ export const testApi = {
 		}).then(res => res.data)
 	},
 	getTestByTestId(testId: string): Promise<Question[]> {
-		return instance.get<Question[]>(`test/${testId}`)
+		return instance.get<Question[]>(`test/${testId}/`)
 			.then(res => res.data)
 	},
 	passTestByTestId(testId: string, payload: PassTestPayload): Promise<PassTestReponse> {
-		return instance.post<PassTestReponse>(`test/${testId}`, payload)
+		return instance.post<PassTestReponse>(`test/${testId}/`, payload)
 			.then(res => res.data)
 	}
 }

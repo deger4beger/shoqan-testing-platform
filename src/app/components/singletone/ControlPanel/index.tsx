@@ -41,6 +41,15 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     getVideo()
     return () => {
       clearTimeout(intervalRef.current!)
+      // if (!isPassTestLoading) {
+      //   onFinishTest()
+      //   notify(
+      //     "Тестирование закончено, так как вы вышли со страницы",
+      //     "notify",
+      //     5,
+      //     "Внимание"
+      //   )
+      // }
     }
   }, [])
 

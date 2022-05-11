@@ -119,7 +119,7 @@ const UserCabinet = () => {
 			        />
 			      	<Combobox
 							  openOnFocus
-							  items={["Корпоративные информационные системы"]}
+							  items={["Корпоративные информационные системы", "Вычислительная техника и ПО"]}
 							  onChange={selected => setSelectedField(selected, "specialty")}
 							  selectedItem={formData.specialty}
 							  placeholder="Специальность"
