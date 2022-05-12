@@ -27,9 +27,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   const videoRef = useRef<null | HTMLVideoElement>(null)
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
   const intervalRef = useRef<null | NodeJS.Timer>(null)
-  const msWithoutCamera = useRef(0)
   const [isModelLoading, setIsModelLoading] = useState(false)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
+  const [msWithoutCamera, setMsWithoutCamera] = useState(0)
 
   useEffect(() => {
     const loadModel = async () => {
@@ -65,6 +65,18 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     }
   }, [secondsLeft])
 
+  useEffect(() => {
+    if (msWithoutCamera === 6000 && isTestStarted) {
+      notify(
+        "Вы завалили тест, не появлявшись на камере",
+        "danger",
+        5,
+        "Ошибка"
+      )
+      onFinishTest()
+    }
+  }, [msWithoutCamera])
+
   const getVideo = () => {
     window.navigator.mediaDevices.getUserMedia({
       video: {
@@ -98,20 +110,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     faceapi.draw.drawDetections(canvasRef.current!, mtcnnResults)
 
     if (mtcnnResults.length === 0) {
-      msWithoutCamera.current += msToRecalculate
+      setMsWithoutCamera(prev => prev += msToRecalculate)
     }
     if (mtcnnResults.length !== 0) {
-      msWithoutCamera.current = 0
-    }
-
-    if (msWithoutCamera.current === 6000) {
-      notify(
-        "Вы завалили тест, не появлявшись на камере",
-        "danger",
-        5,
-        "Ошибка"
-      )
-      onFinishTest()
+      setMsWithoutCamera(prev => 0)
     }
 
     intervalRef.current = setTimeout(() => {
