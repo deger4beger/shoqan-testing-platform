@@ -125,4 +125,8 @@ export class TestStore {
 		this.testsForDiscipline = null
 	}
 
+	resetTests() {
+		this.testsForDiscipline = null
+	}
+
 }

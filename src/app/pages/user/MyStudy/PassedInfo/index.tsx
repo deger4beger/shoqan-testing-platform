@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom"
 
 const PassedInfo = () => {
 
-	const { passingStore } = useStores()
+	const { passingStore, testStore } = useStores()
 	const history = useHistory()
 
 	const { passed, score } = passingStore.passedInfo!
@@ -14,6 +14,7 @@ const PassedInfo = () => {
 	useEffect(() => {
 		return () => {
 			passingStore.resetAllData()
+      testStore.resetTests()
 		}
 	}, [])
 
