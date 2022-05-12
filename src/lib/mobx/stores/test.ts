@@ -122,6 +122,7 @@ export class TestStore {
 	resetData() {
 		this.passed = null
 		this.psychologyTest = null
+		this.testsForDiscipline = null
 	}
 
 }
