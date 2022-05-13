@@ -67,17 +67,20 @@ export class PassingStore {
 
 	passTest = flow(function* (
 		this: PassingStore,
-		payload: PassTestPayload
+		payload: PassTestPayload,
+		testId: string
 	) {
 		this.states.loading.passTest = true
 		try {
-
-			const data = yield testApi.passTestByTestId(this.test!.id, payload)
+			console.log(payload)
+			const data = yield testApi.passTestByTestId(testId, payload)
+			console.log(data)
 			this.states.errors.passTest = false
 
 			this.passedInfo = data
 
 		} catch (e: any) {
+			console.log(e)
 			this.states.errors.passTest = e
 		} finally {
 			this.states.loading.passTest = false

@@ -44,7 +44,7 @@ const Common = () => {
 	  	{ !isLoading && testStore
 	  		.testsForDiscipline?.map(test => {
 		  		return <TestCard
-		  			key={test.filename}
+		  			key={test.id}
 		  			id={test.id}
 		  			onClick={onTestClick}
 		  			title={test.filename}

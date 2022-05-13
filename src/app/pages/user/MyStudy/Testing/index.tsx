@@ -18,6 +18,7 @@ const Testing = () => {
   const [currentAnswers, setCurrentAnswers] = useState<string[]>([])
 
 	const [isTestStarted, setIsTestStarted] = useState(false)
+  const [isTestFinished, setIsTestFinished] = useState(false)
   const { secondsLeft, setTimerStarted } = useTimer(1800)
 
 	const onStartTest = async () => {
@@ -38,8 +39,9 @@ const Testing = () => {
   	setAnswers(copyAnswers)
   }
 
-  const onFinishTest = () => {
-    passingStore.passTest({ answers })
+  const onFinishTest = (answersList: string[] = answers, testId = passingStore.test?.id) => {
+    passingStore.passTest({ answers: answersList }, testId!)
+    setIsTestFinished(true)
   }
 
 	return (
@@ -52,6 +54,11 @@ const Testing = () => {
       >
       	<ControlPanel
 	      	isAbleToEnd={answers.every(el => !!el) && answers.length === 30}
+          callbackData={{
+            answers,
+            testId: passingStore.test?.id,
+            isTestFinished
+          }}
       		isTestStarted={isTestStarted}
 	      	onStartTest={onStartTest}
 	      	onFinishTest={onFinishTest}

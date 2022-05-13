@@ -9,9 +9,16 @@ interface ControlPanelProps {
   isAbleToEnd: boolean
   isTestLoading: boolean
   isPassTestLoading: boolean
-  secondsLeft: number
+  secondsLeft: number,
+  callbackData: CallbackData
   onStartTest: () => void
-  onFinishTest: () => void
+  onFinishTest: (answersList?: string[], testId?: string) => void
+}
+
+interface CallbackData {
+  isTestFinished: boolean,
+  testId: string | undefined
+  answers: string[]
 }
 
 const ControlPanel: React.FC<ControlPanelProps> = ({
@@ -21,7 +28,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   onFinishTest,
   secondsLeft,
   isAbleToEnd,
-  isPassTestLoading
+  callbackData,
+  isPassTestLoading,
 }) => {
 
   const videoRef = useRef<null | HTMLVideoElement>(null)
@@ -30,6 +38,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   const [isModelLoading, setIsModelLoading] = useState(false)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
   const [msWithoutCamera, setMsWithoutCamera] = useState(0)
+
+  const callbackDataRef = useRef<CallbackData | null>(null)
+  callbackDataRef.current = callbackData
 
   useEffect(() => {
     const loadModel = async () => {
@@ -41,15 +52,16 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     getVideo()
     return () => {
       clearTimeout(intervalRef.current!)
-      // if (!isPassTestLoading) {
-      //   onFinishTest()
-      //   notify(
-      //     "Тестирование закончено, так как вы вышли со страницы",
-      //     "notify",
-      //     5,
-      //     "Внимание"
-      //   )
-      // }
+      if (!callbackDataRef.current!.isTestFinished) {
+        const { answers, testId } = callbackDataRef.current!
+        onFinishTest(answers, testId)
+        notify(
+          "Тестирование закончено, так как вы вышли со страницы",
+          "notify",
+          5,
+          "Внимание"
+        )
+      }
     }
   }, [])
 
@@ -214,7 +226,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             Начать тестирование
           </Button>
           <Button
-              onClick={onFinishTest}
+              onClick={() => onFinishTest()}
               size="medium"
               intent="none"
               disabled={isModelLoading || !isAbleToEnd}
