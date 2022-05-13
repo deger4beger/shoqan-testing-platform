@@ -31,8 +31,7 @@ const SymbolsPerSecond: React.FC<SymbolsPerSecondProps> = ({
 		setWordsString(prev => currentString)
 		if (wordsForTest.join(" ").length === currentString.length) {
 			setInputDisabled(true)
-			onSetSPS(Math.round(wordsString.length / 500 - secondsLeft))
-			console.log(secondsLeft, Math.round(wordsString.length / (500 - secondsLeft)))
+			onSetSPS(Math.round(wordsString.length / (500 - secondsLeft)))
 			return
 		}
 	}

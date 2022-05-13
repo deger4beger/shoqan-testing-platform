@@ -152,11 +152,9 @@ const UserCabinet = () => {
 									disabled={isFormDisabled}
 									accept={[MimeType.jpeg, MimeType.png]}
 								/>
-							{
-								<SymbolsPerSecond
-									onSetSPS={onSetSPS}
-								/>
-							}
+							<SymbolsPerSecond
+								onSetSPS={onSetSPS}
+							/>
 							{ error && (
 								<InlineAlert intent="danger" paddingTop={4} paddingLeft={2}>
 									{ error }
