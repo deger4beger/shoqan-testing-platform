@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import { Button,
 	Combobox,
 	FilePicker, Heading, InfoSignIcon, InlineAlert, MimeType, Pane,
@@ -9,6 +9,7 @@ import { observer } from "mobx-react"
 import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
 import Preloader from "../../../components/reusable/Preloader"
 import CompetenceCard from "../../../components/reusable/CompetenceCard"
+import SymbolsPerSecond from "./SymbolsPerSecond"
 
 const UserCabinet = () => {
 
@@ -20,9 +21,10 @@ const UserCabinet = () => {
   	course: ""
   })
   const [photo, setPhoto] = useState<null | FileList>(null)
+  const [SPS, setSPS] = useState<null | number>(null) // symbols per second
   const [error, setError] = useState<null | string>(null)
 
-  const isBtnDisabled = Object.values(formData).some(el => !el) || !photo
+  const isBtnDisabled = Object.values(formData).some(el => !el) || !photo || !SPS
 
   useEffect(() => {
   	userStore.getCabinetData()
@@ -82,6 +84,7 @@ const UserCabinet = () => {
    	setError(null)
 		userStore.sendProfile({
 			...formData,
+			sps: SPS!,
 			photo: photoFile
 		})
 	}
@@ -145,6 +148,9 @@ const UserCabinet = () => {
 									disabled={isFormDisabled}
 									accept={[MimeType.jpeg, MimeType.png]}
 								/>
+							{
+								<SymbolsPerSecond />
+							}
 							{ error && (
 								<InlineAlert intent="danger" paddingTop={4} paddingLeft={2}>
 									{ error }

@@ -22,6 +22,7 @@ export interface UserProfilePayload {
 	fullname: string
 	specialty: string
 	course: string
+	sps: number
 	photo: File
 }
 
