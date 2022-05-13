@@ -89,6 +89,10 @@ const UserCabinet = () => {
 		})
 	}
 
+	const onSetSPS = (sps: number) => {
+		setSPS(sps)
+	}
+
 	if (!userStore.isInitialized || userStore.states.loading.base) {
 		return <Preloader />
 	}
@@ -149,7 +153,9 @@ const UserCabinet = () => {
 									accept={[MimeType.jpeg, MimeType.png]}
 								/>
 							{
-								<SymbolsPerSecond />
+								<SymbolsPerSecond
+									onSetSPS={onSetSPS}
+								/>
 							}
 							{ error && (
 								<InlineAlert intent="danger" paddingTop={4} paddingLeft={2}>
