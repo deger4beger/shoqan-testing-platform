@@ -9,7 +9,7 @@ import { observer } from "mobx-react"
 import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
 import Preloader from "../../../components/reusable/Preloader"
 import CompetenceCard from "../../../components/reusable/CompetenceCard"
-import SymbolsPerSecond from "./SymbolsPerSecond"
+import SymbolsPerSecond from "../../../components/reusable/SymbolsPerSecond"
 
 const UserCabinet = () => {
 

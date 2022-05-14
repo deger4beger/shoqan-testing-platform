@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Heading, Pane, TextInputField } from "evergreen-ui"
-import { words } from "../../../../../lib/structures"
-import { getRandom } from "../../../../helpers"
-import useTimer from "../../../../hooks/useTimer"
+import { words } from "../../../../lib/structures"
+import { getRandom } from "../../../helpers"
+import useTimer from "../../../hooks/useTimer"
 
 interface SymbolsPerSecondProps {
 	onSetSPS: (number) => void
@@ -31,7 +31,7 @@ const SymbolsPerSecond: React.FC<SymbolsPerSecondProps> = ({
 		setWordsString(prev => currentString)
 		if (wordsForTest.join(" ").length === currentString.length) {
 			setInputDisabled(true)
-			onSetSPS(Math.round(wordsString.length / (500 - secondsLeft)))
+			onSetSPS(Math.round(wordsString.length / ((500 - secondsLeft) / 60)))
 			return
 		}
 	}
@@ -58,8 +58,13 @@ const SymbolsPerSecond: React.FC<SymbolsPerSecondProps> = ({
 					border="2px solid #c1c4d6"
 					borderRadius={6}
 				>
-				{ wordsForTest.map(word =>
-					<Pane paddingX={8} paddingY={2} key={word}>
+				{ wordsForTest.map((word, index) =>
+					<Pane
+							paddingX={8}
+							paddingY={2}
+							key={word}
+							color={wordsForTest.includes(wordsString.split(" ")[index]) ? "blue" : "black"}
+						>
 						{ word }
 					</Pane>
 				) }
