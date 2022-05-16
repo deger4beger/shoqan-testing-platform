@@ -17,7 +17,7 @@ import { dataURItoBlob } from "../../../helpers"
 const UserCabinet = () => {
 
 	const { userStore } = useStores()
-	const { videoRef, photoRef, getVideo, takePhoto } = useCamera(150, 200)
+	const { videoRef, photoRef, getVideo, takePhoto } = useCamera(300, 400)
 
   const [formData, setFormData] = useState({
   	fullname: "",
@@ -182,8 +182,8 @@ const UserCabinet = () => {
 									<Pane display="flex" justifyContent="center">
 										<Pane
 												border="3px solid #8f95b2"
-												height={214}
-												width={164}
+												height={414}
+												width={314}
 												padding={4}
 												marginRight={20}
 											>
@@ -191,8 +191,8 @@ const UserCabinet = () => {
 						        </Pane>
 						        <Pane
 						            border="3px solid #8f95b2"
-						            height={214}
-												width={164}
+						            height={414}
+												width={314}
 						            padding={4}
 						            position="relative"
 						          >
