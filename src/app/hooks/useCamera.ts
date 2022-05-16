@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 
-const useCamera = () => {
+const useCamera = (width=300, height=400) => {
 
 	const videoRef = useRef<null | HTMLVideoElement>(null)
   const photoRef = useRef<null | HTMLCanvasElement>(null)
@@ -8,8 +8,8 @@ const useCamera = () => {
   const getVideo = () => {
     window.navigator.mediaDevices.getUserMedia({
       video: {
-        width: 300,
-        height: 400
+        width,
+        height
       }
     }).then(stream => {
       let video = videoRef.current
@@ -19,8 +19,6 @@ const useCamera = () => {
   }
 
   const takePhoto = () => {
-    const width = 300
-    const height = 400
     let video = videoRef.current
     let photo = photoRef.current
 

@@ -13,7 +13,7 @@ const Title: React.FC<TitleProps> = ({
 	title
 }) => {
 	return (
-		<Pane marginBottom={50} display="flex" flexDirection="column" alignItems="center">
+		<Pane marginBottom={30} display="flex" flexDirection="column" alignItems="center">
       <Heading size={600} borderBottom="2px solid #c1c4d6" paddingX={20} paddingBottom={4}>
         { icon && icon }{ title }
       </Heading>

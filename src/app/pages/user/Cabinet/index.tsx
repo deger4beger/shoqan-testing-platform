@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button,
 	Combobox,
 	FilePicker, Heading, InfoSignIcon, InlineAlert, MimeType, Pane,
-	SendMessageIcon, TextInputField
+	SendMessageIcon, Strong, TextInputField
 } from "evergreen-ui"
 import { useStores } from "../../../../lib/mobx"
 import { observer } from "mobx-react"
@@ -10,10 +10,14 @@ import UserProfileFilled from "../../../components/singletone/UserProfileFilled"
 import Preloader from "../../../components/reusable/Preloader"
 import CompetenceCard from "../../../components/reusable/CompetenceCard"
 import SymbolsPerSecond from "../../../components/reusable/SymbolsPerSecond"
+import useCamera from "../../../hooks/useCamera"
+import Title from "../../../components/reusable/Title"
+import { dataURItoBlob } from "../../../helpers"
 
 const UserCabinet = () => {
 
 	const { userStore } = useStores()
+	const { videoRef, photoRef, getVideo, takePhoto } = useCamera(150, 200)
 
   const [formData, setFormData] = useState({
   	fullname: "",
@@ -23,6 +27,7 @@ const UserCabinet = () => {
   const [photo, setPhoto] = useState<null | FileList>(null)
   const [SPS, setSPS] = useState<null | number>(null) // symbols per second
   const [error, setError] = useState<null | string>(null)
+  const [isCameraShown, setIsCameraShown] = useState(false)
 
   const isBtnDisabled = Object.values(formData).some(el => !el) || !photo || !SPS
 
@@ -93,6 +98,15 @@ const UserCabinet = () => {
 		setSPS(sps)
 	}
 
+	const onShowCamera = () => {
+		getVideo()
+		setIsCameraShown(true)
+	}
+	const onMakePhoto = () => {
+		takePhoto()
+		setPhoto([dataURItoBlob(photoRef.current!.toDataURL())] as any)
+	}
+
 	if (!userStore.isInitialized || userStore.states.loading.base) {
 		return <Preloader />
 	}
@@ -109,12 +123,10 @@ const UserCabinet = () => {
       	<Pane width={480}>
     			{ !isFormDisabled ? (
     				<>
-	    				<Pane>
-			      		<Heading size={600} borderBottom="2px solid #c1c4d6" paddingBottom={6} textAlign="center">
-			      			<InfoSignIcon color="info" marginRight={16} />
-			      			Заполните анкету, чтобы продолжить дальше
-			      		</Heading>
-		      		</Pane>
+		      		<Title
+					      icon={ <InfoSignIcon color="info" marginRight={16} /> }
+					      title="Заполните анкету, чтобы продолжить дальше"
+					    />
 			      	<TextInputField
 			          label="ФИО"
 			          placeholder="Введите ФИО"
@@ -144,6 +156,11 @@ const UserCabinet = () => {
 							  marginBottom={20}
 							  disabled={isFormDisabled}
 							/>
+							<Pane borderBottom={true} paddingBottom={6} marginBottom={10}>
+								<Heading size={500} textAlign="center">
+									Загрузите фото
+								</Heading>
+							</Pane>
 							<FilePicker
 									width="100%"
 									onChange={(photo) => setPhoto(photo)}
@@ -152,6 +169,44 @@ const UserCabinet = () => {
 									disabled={isFormDisabled}
 									accept={[MimeType.jpeg, MimeType.png]}
 								/>
+							<Pane textAlign="center" borderTop={true} paddingTop={10} >
+								<Heading size={500} textAlign="center" paddingBottom={10}>
+									Или сделайте фото
+								</Heading>
+								{ !isCameraShown && <Button width={200} onClick={onShowCamera}>
+									Открыть камеру
+								</Button> }
+							</Pane>
+							{ isCameraShown && (
+								<Pane display="flex" alignItems="center" flexDirection="column">
+									<Pane display="flex" justifyContent="center">
+										<Pane
+												border="3px solid #8f95b2"
+												height={214}
+												width={164}
+												padding={4}
+												marginRight={20}
+											>
+						          <video ref={videoRef}></video>
+						        </Pane>
+						        <Pane
+						            border="3px solid #8f95b2"
+						            height={214}
+												width={164}
+						            padding={4}
+						            position="relative"
+						          >
+						          <canvas ref={photoRef}></canvas>
+						          { !photo && <Strong position="absolute" width="100%" left="16%" top="45%">
+						          	Сделайте фото
+						          </Strong> }
+						        </Pane>
+					        </Pane>
+					        <Button width={200} onClick={onMakePhoto} marginTop={20}>
+										Сделать фото
+									</Button>
+				        </Pane>
+							) }
 							<SymbolsPerSecond
 								onSetSPS={onSetSPS}
 							/>
