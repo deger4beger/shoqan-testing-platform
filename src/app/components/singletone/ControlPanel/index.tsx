@@ -35,7 +35,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   const videoRef = useRef<null | HTMLVideoElement>(null)
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
   const intervalRef = useRef<null | NodeJS.Timer>(null)
-  const [isModelLoading, setIsModelLoading] = useState(false)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
   const [msWithoutCamera, setMsWithoutCamera] = useState(0)
 
@@ -43,12 +42,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   callbackDataRef.current = callbackData
 
   useEffect(() => {
-    const loadModel = async () => {
-      setIsModelLoading(true)
-      await faceapi.loadMtcnnModel("/models")
-      setIsModelLoading(false)
-    }
-    loadModel()
     getVideo()
     return () => {
       clearTimeout(intervalRef.current!)
@@ -203,7 +196,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               onClick={runProctoring}
               size="medium"
               intent="none"
-              disabled={isModelLoading || isProctoringStarted}
+              disabled={isProctoringStarted}
               isLoading={false}
               margin={6}
               marginRight={12}
@@ -216,7 +209,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               onClick={onStartTest}
               size="medium"
               intent="none"
-              disabled={isModelLoading || !isProctoringStarted || isTestStarted}
+              disabled={!isProctoringStarted || isTestStarted}
               isLoading={isTestLoading}
               margin={6}
               marginRight={12}
@@ -229,7 +222,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
               onClick={() => onFinishTest()}
               size="medium"
               intent="none"
-              disabled={isModelLoading || !isAbleToEnd}
+              disabled={!isAbleToEnd}
               isLoading={isPassTestLoading}
               margin={6}
               flexGrow={1}

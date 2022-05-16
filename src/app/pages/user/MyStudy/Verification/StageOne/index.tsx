@@ -12,6 +12,8 @@ import * as faceapi from "face-api.js"
 import { observer } from "mobx-react"
 import { useStores } from "../../../../../../lib/mobx"
 import Title from "../../../../../components/reusable/Title"
+import { dataURItoBlob } from "../../../../../helpers"
+import useCamera from "../../../../../hooks/useCamera"
 
 interface StageOneProps {
   complete: () => void
@@ -21,54 +23,21 @@ const StageOne: React.FC<StageOneProps> = ({
   complete
 }) => {
 
-  const videoRef = useRef<null | HTMLVideoElement>(null)
-  const photoRef = useRef<null | HTMLCanvasElement>(null)
-
   const [faceSimilarity, setFaceSimilarity] = useState<null | number>(null)
   const [isPhotoDone, setIsPhotoDone] = useState(false)
-  const [isNetsLoading, setIsNetsLoading] = useState(false)
   const [isVerifying, setIsVerifying] = useState(false)
   const [isVerificateDisabled, setIsVerificateDisabled] = useState(false)
+
+  const { videoRef, photoRef, getVideo, takePhoto } = useCamera()
 
   const { userStore } = useStores()
 
   useEffect( () => {
-    const loadNets = async () => {
-      setIsNetsLoading(true)
-      await faceapi.loadSsdMobilenetv1Model("/models")
-      await faceapi.loadTinyFaceDetectorModel("/models")
-      await faceapi.loadFaceLandmarkModel("/models")
-      await faceapi.loadFaceRecognitionModel("/models")
-      setIsNetsLoading(false)
-    }
-    loadNets()
     getVideo()
   }, [videoRef])
 
-  const getVideo = () => {
-    window.navigator.mediaDevices.getUserMedia({
-      video: {
-        width: 300,
-        height: 400
-      }
-    }).then(stream => {
-      let video = videoRef.current
-      video!.srcObject = stream
-      video!.play()
-    })
-  }
-
-  const takePhoto = () => {
-    const width = 300
-    const height = 400
-    let video = videoRef.current
-    let photo = photoRef.current
-
-    photo!.width = width
-    photo!.height = height
-
-    let ctx = photo!.getContext("2d")
-    ctx!.drawImage(video as any, 0, 0, width, height)
+  const onTakePhoto = () => {
+    takePhoto()
     setIsPhotoDone(true)
     isVerificateDisabled && setIsVerificateDisabled(false)
   }
@@ -100,7 +69,6 @@ const StageOne: React.FC<StageOneProps> = ({
     } catch (e) {
       setFaceSimilarity(0)
       setIsVerifying(false)
-      console.log(e)
     }
   }
 
@@ -151,12 +119,11 @@ const StageOne: React.FC<StageOneProps> = ({
       </Pane>
       <Pane marginTop={40} display="flex" alignItems="center" position="relative" left={10}>
         <Button
-            onClick={() => takePhoto()}
+            onClick={() => onTakePhoto()}
             appearance="primary"
             size="large"
             marginRight={20}
             disabled={isVerifying}
-            isLoading={isNetsLoading}
           >
           Сделать фото
         </Button>
