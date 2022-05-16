@@ -3,6 +3,7 @@ import * as faceapi from "face-api.js"
 import Timer from "../../reusable/Timer"
 import { Button, Heading, Pane, Strong } from "evergreen-ui"
 import { notify } from "../../../helpers"
+import useCamera from "../../../hooks/useCamera"
 
 interface ControlPanelProps {
   isTestStarted: boolean
@@ -21,6 +22,10 @@ interface CallbackData {
   answers: string[]
 }
 
+interface CallbackDataRef extends CallbackData {
+  isTestStarted: boolean
+}
+
 const ControlPanel: React.FC<ControlPanelProps> = ({
   isTestStarted,
   isTestLoading,
@@ -32,20 +37,23 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   isPassTestLoading,
 }) => {
 
-  const videoRef = useRef<null | HTMLVideoElement>(null)
-  const canvasRef = useRef<null | HTMLCanvasElement>(null)
   const intervalRef = useRef<null | NodeJS.Timer>(null)
   const [isProctoringStarted, setIsProctoringStarted] = useState(false)
   const [msWithoutCamera, setMsWithoutCamera] = useState(0)
 
-  const callbackDataRef = useRef<CallbackData | null>(null)
-  callbackDataRef.current = callbackData
+  const { photoRef, videoRef, getVideo } = useCamera(320, 180)
+
+  const callbackDataRef = useRef<CallbackDataRef | null>(null)
+  callbackDataRef.current = {
+    ...callbackData,
+    isTestStarted
+  }
 
   useEffect(() => {
     getVideo()
     return () => {
       clearTimeout(intervalRef.current!)
-      if (!callbackDataRef.current!.isTestFinished) {
+      if (!callbackDataRef.current!.isTestFinished && callbackDataRef.current!.isTestStarted) {
         const { answers, testId } = callbackDataRef.current!
         onFinishTest(answers, testId)
         notify(
@@ -82,22 +90,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     }
   }, [msWithoutCamera])
 
-  const getVideo = () => {
-    window.navigator.mediaDevices.getUserMedia({
-      video: {
-        width: 320,
-        height: 180
-      }
-    }).then(stream => {
-      let video = videoRef.current
-      video!.srcObject = stream
-      video!.play()
-
-      canvasRef.current!.width = 320
-      canvasRef.current!.height = 180
-    })
-  }
-
   const runProctoring = async () => {
     const msToRecalculate = 100
 
@@ -110,9 +102,9 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
       mtcnnForwardParams as any
     )
 
-    canvasRef.current!.getContext('2d')!.clearRect(0, 0, 320, 180)
+    photoRef.current!.getContext('2d')!.clearRect(0, 0, 320, 180)
 
-    faceapi.draw.drawDetections(canvasRef.current!, mtcnnResults)
+    faceapi.draw.drawDetections(photoRef.current!, mtcnnResults)
 
     if (mtcnnResults.length === 0) {
       setMsWithoutCamera(prev => prev += msToRecalculate)
@@ -171,7 +163,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             borderTopLeftRadius={6}
             borderTopRightRadius={6}
           >
-          <canvas ref={canvasRef} />
+          <canvas ref={photoRef} />
         </Pane>
       </Pane>
       <Pane

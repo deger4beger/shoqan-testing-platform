@@ -197,7 +197,7 @@ const UserCabinet = () => {
 						            position="relative"
 						          >
 						          <canvas ref={photoRef}></canvas>
-						          { !photo && <Strong position="absolute" width="100%" left="16%" top="45%">
+						          { !photo && <Strong position="absolute" width="100%" left="34%" top="47%">
 						          	Сделайте фото
 						          </Strong> }
 						        </Pane>

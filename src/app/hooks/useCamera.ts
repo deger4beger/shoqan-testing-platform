@@ -1,9 +1,16 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 const useCamera = (width=300, height=400) => {
 
-	const videoRef = useRef<null | HTMLVideoElement>(null)
+  const videoRef = useRef<null | HTMLVideoElement>(null)
   const photoRef = useRef<null | HTMLCanvasElement>(null)
+  const [stream, setStream] = useState<MediaStream | null>(null)
+
+  useEffect(() => {
+    return () => {
+      stream?.getVideoTracks()[0].stop()
+    }
+  }, [])
 
   const getVideo = () => {
     window.navigator.mediaDevices.getUserMedia({
@@ -15,6 +22,7 @@ const useCamera = (width=300, height=400) => {
       let video = videoRef.current
       video!.srcObject = stream
       video!.play()
+      setStream(prev => stream)
     })
   }
 
