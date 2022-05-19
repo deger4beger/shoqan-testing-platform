@@ -1,7 +1,7 @@
 import "./index.scss"
 import React, { useEffect, useState } from "react"
 import { Pane, Text } from "evergreen-ui"
-import { BrowserRouter } from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 import { observer } from "mobx-react"
 import * as faceapi from "face-api.js"
 
@@ -39,7 +39,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {authStore.isLoggedIn &&
         <Header
           userIdentifier={authStore.userData.email as string}
@@ -51,7 +51,7 @@ function App() {
          <AppRouter isAdmin={authStore.userData.isAdmin} />
       </Pane>
       {authStore.isLoggedIn && <Footer /> }
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
