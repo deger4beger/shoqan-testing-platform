@@ -21,7 +21,6 @@ function App() {
     authStore.initializeUser()
     const loadNets = async () => {
       await faceapi.loadSsdMobilenetv1Model("/models")
-      await faceapi.loadTinyFaceDetectorModel("/models")
       await faceapi.loadFaceLandmarkModel("/models")
       await faceapi.loadFaceRecognitionModel("/models")
       await faceapi.loadMtcnnModel("/models")

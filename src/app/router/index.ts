@@ -1,12 +1,12 @@
-import React from "react"
+import React, { lazy } from "react"
 
-import Signin from "../pages/unauthorized/Signin"
-import Signup from "../pages/unauthorized/Signup"
-import UserCabinet from "../pages/user/Cabinet"
-import AllCertificates from "../pages/admin/AllCertificates"
-import UploadTests from "../pages/admin/UploadTests"
-import MyStudy from "../pages/user/MyStudy"
-import MyCertificates from "../pages/user/MyCertificates"
+const Signin = lazy(() => import("../pages/unauthorized/Signin"))
+const Signup = lazy(() => import("../pages/unauthorized/Signup"))
+const UserCabinet = lazy(() => import("../pages/user/Cabinet"))
+const AllCertificates = lazy(() => import("../pages/admin/AllCertificates"))
+const UploadTests = lazy(() => import("../pages/admin/UploadTests"))
+const MyStudy = lazy(() => import("../pages/user/MyStudy"))
+const MyCertificates = lazy(() => import("../pages/user/MyCertificates"))
 
 export interface IRoute {
     path: string;
