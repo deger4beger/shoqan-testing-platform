@@ -103,7 +103,6 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     )
 
     photoRef.current!.getContext('2d')!.clearRect(0, 0, 320, 180)
-
     faceapi.draw.drawDetections(photoRef.current!, mtcnnResults)
 
     if (mtcnnResults.length === 0) {
