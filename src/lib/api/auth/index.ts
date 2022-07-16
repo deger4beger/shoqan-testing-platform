@@ -6,7 +6,7 @@ import {
 } from "../../../types"
 
 const instance = axios.create({
-    baseURL: "http://localhost:8000" // https://shoqan-platform.herokuapp.com
+    baseURL: "https://shoqan-platform.herokuapp.com" // http://localhost:8000
 })
 
 export const authApi = {

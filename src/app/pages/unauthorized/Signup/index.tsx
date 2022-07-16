@@ -65,6 +65,7 @@ const Signup = () => {
 					  validationMessage={null}
 					  onChange={setFormFieldValue("password")}
 					  value={formData.password}
+					  type={"password"}
 					  required
 					/>
 				</>
