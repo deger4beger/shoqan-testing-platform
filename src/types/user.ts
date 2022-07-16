@@ -2,11 +2,10 @@ import { Competence } from "."
 
 export interface UserSignupPayload {
 	email: string
-}
-
-export interface UserSigninPayload extends UserSignupPayload {
 	password: string
 }
+
+export interface UserSigninPayload extends UserSignupPayload { }
 
 export interface UserData {
 	id: string

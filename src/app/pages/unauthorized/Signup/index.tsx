@@ -10,19 +10,28 @@ const Signup = () => {
 
 	const history = useHistory()
 	const { authStore } = useStores()
-	const [email, setEmail] = useState("")
-
+	const [formData, setFormData] = useState({
+		email: "",
+		password: ""
+	})
 
 	const onSubmitForm = async () => {
-		if (!email) return
-		await authStore.signup({ email })
+		if (!formData.email || !formData.password) return
+		await authStore.signup(formData)
 		if (!authStore.states.errors.signup) {
 			history.push("/signin")
 		}
 	}
 
-	const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.currentTarget.value)
+	const setFormFieldValue = (
+		fieldName: keyof typeof formData
+	) => (
+		e: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		setFormData(prev => ({
+			...prev,
+			[fieldName]: e.target.value
+		}))
 	}
 
 	return (
@@ -43,8 +52,19 @@ const Signup = () => {
 					  placeholder="example@example.com"
 						isInvalid={false}
 					  validationMessage={null}
-					  onChange={onEmailChange}
-					  value={email}
+					  onChange={setFormFieldValue("email")}
+					  value={formData.email}
+					  required
+					/>
+					<TextInputField
+					  inputWidth={380}
+					  inputHeight={40}
+					  label="Пароль"
+					  placeholder="*****"
+						isInvalid={false}
+					  validationMessage={null}
+					  onChange={setFormFieldValue("password")}
+					  value={formData.password}
 					  required
 					/>
 				</>
