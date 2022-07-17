@@ -80,8 +80,7 @@ const Signin = () => {
 	      cancelLabel="Закрыть"
 	      confirmLabel="Подтвердить"
 	    >
-	      Временный пароль был отправлен на почту
-	      <Heading> {authStore.temporaryData.email}</Heading>
+	      Регистрация аккаунта { authStore.temporaryData.email } успешно пройдена
 	    </CornerDialog>
     </>
 	)
