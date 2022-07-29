@@ -4,7 +4,7 @@ import { protectedInterceptor } from "./index.interceptors"
 import { Answers, CompetenceResponse, GetCertificatesParams, PassTestPayload, PassTestReponse, Question, StressData, TestForDiscipline, TestForDisciplineParams, UserProfile } from "../../../types"
 
 const instance = axios.create({
-    baseURL: "https://shoqan-platform.herokuapp.com" // http://localhost:8000
+    baseURL: "http://localhost:8000" // https://shoqan-platform.herokuapp.com
 })
 
 instance.interceptors.request.use(protectedInterceptor)
