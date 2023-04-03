@@ -1,7 +1,7 @@
-## Shoqan-testing-platform
+### Shoqan-testing-platform
 Testing platform for students with verification and real-time proctoring.
 
-## Scripts
+### Scripts
 ```sh
 # dev:
 yarn dev
